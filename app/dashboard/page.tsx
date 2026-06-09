@@ -55,17 +55,17 @@ export default function DashboardPage() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef  = useRef<HTMLTextAreaElement>(null);
 
-  const [user, setUser]                   = useState<any>(null);
-  const [messages, setMessages]           = useState<Message[]>([]);
-  const [input, setInput]                 = useState("");
-  const [loading, setLoading]             = useState(false);
-  const [apiError, setApiError]           = useState("");
-  const [showSettings, setShowSettings]   = useState(false);
+  const [user, setUser]                         = useState<any>(null);
+  const [messages, setMessages]                 = useState<Message[]>([]);
+  const [input, setInput]                       = useState("");
+  const [loading, setLoading]                   = useState(false);
+  const [apiError, setApiError]                 = useState("");
+  const [showSettings, setShowSettings]         = useState(false);
   const [showIntegrations, setShowIntegrations] = useState(false);
-  const [integrations, setIntegrations]   = useState(ALL_INTEGRATIONS);
-  const [settingsTab, setSettingsTab]     = useState<"profile"|"preferences"|"security">("profile");
-  const [savingProfile, setSavingProfile] = useState(false);
-  const [profileForm, setProfileForm]     = useState({ full_name: "", company: "", role: "" });
+  const [integrations, setIntegrations]         = useState(ALL_INTEGRATIONS);
+  const [settingsTab, setSettingsTab]           = useState<"profile" | "preferences" | "security">("profile");
+  const [savingProfile, setSavingProfile]       = useState(false);
+  const [profileForm, setProfileForm]           = useState({ full_name: "", company: "", role: "" });
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -127,7 +127,10 @@ export default function DashboardPage() {
     setSavingProfile(true);
     const { error } = await supabase.auth.updateUser({ data: profileForm });
     if (error) toast.error("Failed to save profile");
-    else { toast.success("Profile saved!"); setUser((u: any) => ({ ...u, user_metadata: { ...u.user_metadata, ...profileForm } })); }
+    else {
+      toast.success("Profile saved!");
+      setUser((u: any) => ({ ...u, user_metadata: { ...u.user_metadata, ...profileForm } }));
+    }
     setSavingProfile(false);
   }
 
@@ -139,7 +142,7 @@ export default function DashboardPage() {
 
   const connectedTools = integrations.filter(i => i.connected);
   const firstName = user?.user_metadata?.full_name?.split(" ")[0] ?? "there";
-  return (
+return (
     <div className="flex h-screen bg-cream-50 dark:bg-navy-950 overflow-hidden">
 
       {/* SIDEBAR */}
@@ -341,11 +344,12 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
-      {/* SETTINGS MODAL */}
+{/* SETTINGS MODAL */}
       {showSettings && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowSettings(false)} />
           <div className="relative bg-white dark:bg-navy-900 rounded-2xl border border-navy-100 dark:border-navy-700 shadow-2xl w-full max-w-lg max-h-[85vh] overflow-hidden flex flex-col">
+
             <div className="flex items-center justify-between px-6 py-4 border-b border-navy-100 dark:border-navy-800">
               <h2 className="font-display font-semibold text-lg text-navy-900 dark:text-cream-100">Settings</h2>
               <button onClick={() => setShowSettings(false)} className="w-8 h-8 rounded-lg flex items-center justify-center text-navy-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors">
@@ -355,9 +359,9 @@ export default function DashboardPage() {
 
             <div className="flex border-b border-navy-100 dark:border-navy-800 px-6">
               {[
-                { id: "profile",     label: "Profile",     icon: User    },
-                { id: "preferences", label: "Preferences", icon: Bell    },
-                { id: "security",    label: "Security",    icon: Shield  },
+                { id: "profile",     label: "Profile",     icon: User   },
+                { id: "preferences", label: "Preferences", icon: Bell   },
+                { id: "security",    label: "Security",    icon: Shield },
               ].map(tab => (
                 <button key={tab.id} onClick={() => setSettingsTab(tab.id as any)}
                   className={cn("flex items-center gap-2 px-4 py-3 text-sm font-body font-medium border-b-2 transition-colors -mb-px",
@@ -370,6 +374,8 @@ export default function DashboardPage() {
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
+
+              {/* ── PROFILE TAB ── */}
               {settingsTab === "profile" && (
                 <>
                   <div className="flex items-center gap-4 p-4 rounded-xl bg-navy-50 dark:bg-navy-800/50 border border-navy-100 dark:border-navy-700">
@@ -377,14 +383,29 @@ export default function DashboardPage() {
                       {(profileForm.full_name || user?.email)?.[0]?.toUpperCase()}
                     </div>
                     <div>
-                      <p className="font-body font-semibold text-navy-900 dark:text-cream-100">{profileForm.full_name || "Your Name"}</p>
+                      <p className="font-body font-semibold text-navy-900 dark:text-cream-100">
+                        {profileForm.full_name || "Your Name"}
+                      </p>
                       <p className="font-mono text-xs text-navy-400 dark:text-cream-500">{user?.email}</p>
-                      <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-accent-blue/10 text-accent-blue font-mono text-xs border border-accent-blue/20">Free plan</span>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-accent-blue/10 text-accent-blue font-mono text-xs border border-accent-blue/20">
+                          Free plan
+                        </span>
+                        <button
+                          onClick={() => { setShowSettings(false); router.push("/pricing"); }}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-accent-blue to-accent-indigo text-white font-mono text-xs font-semibold hover:opacity-90 transition-opacity"
+                        >
+                          Upgrade →
+                        </button>
+                      </div>
                     </div>
                   </div>
+
                   <div>
                     <label className="font-body text-sm font-medium text-navy-700 dark:text-cream-300 block mb-1.5">Full Name</label>
-                    <input type="text" value={profileForm.full_name} onChange={e => setProfileForm(f => ({ ...f, full_name: e.target.value }))} className="input" placeholder="Your full name" />
+                    <input type="text" value={profileForm.full_name}
+                      onChange={e => setProfileForm(f => ({ ...f, full_name: e.target.value }))}
+                      className="input" placeholder="Your full name" />
                   </div>
                   <div>
                     <label className="font-body text-sm font-medium text-navy-700 dark:text-cream-300 block mb-1.5">Email</label>
@@ -393,13 +414,17 @@ export default function DashboardPage() {
                   </div>
                   <div>
                     <label className="font-body text-sm font-medium text-navy-700 dark:text-cream-300 block mb-1.5">Company</label>
-                    <input type="text" value={profileForm.company} onChange={e => setProfileForm(f => ({ ...f, company: e.target.value }))} className="input" placeholder="Your company" />
+                    <input type="text" value={profileForm.company}
+                      onChange={e => setProfileForm(f => ({ ...f, company: e.target.value }))}
+                      className="input" placeholder="Your company" />
                   </div>
                   <div>
                     <label className="font-body text-sm font-medium text-navy-700 dark:text-cream-300 block mb-1.5">Role</label>
-                    <select value={profileForm.role} onChange={e => setProfileForm(f => ({ ...f, role: e.target.value }))} className="input">
+                    <select value={profileForm.role}
+                      onChange={e => setProfileForm(f => ({ ...f, role: e.target.value }))}
+                      className="input">
                       <option value="">Select your role...</option>
-                      {["Founder / CEO","CTO / Engineering Lead","Product Manager","Engineering","Marketing","Sales","Operations","Other"].map(r => (
+                      {["Founder / CEO", "CTO / Engineering Lead", "Product Manager", "Engineering", "Marketing", "Sales", "Operations", "Other"].map(r => (
                         <option key={r} value={r}>{r}</option>
                       ))}
                     </select>
@@ -410,34 +435,51 @@ export default function DashboardPage() {
                 </>
               )}
 
+              {/* ── PREFERENCES TAB ── */}
               {settingsTab === "preferences" && (
                 <div className="space-y-3">
+                  {/* Dark mode toggle — free feature */}
                   <div className="flex items-center justify-between p-4 rounded-xl border border-navy-100 dark:border-navy-700 bg-navy-50/50 dark:bg-navy-800/30">
                     <div>
                       <p className="font-body font-medium text-navy-900 dark:text-cream-100 text-sm">Dark mode</p>
                       <p className="font-body text-xs text-navy-500 dark:text-cream-400 mt-0.5">Switch between light and dark theme</p>
                     </div>
                     <button onClick={toggleTheme}
-                      className={cn("w-11 h-6 rounded-full transition-all relative flex-shrink-0", theme === "dark" ? "bg-accent-blue" : "bg-navy-200 dark:bg-navy-700")}>
-                      <div className={cn("w-4 h-4 rounded-full bg-white absolute top-1 transition-all", theme === "dark" ? "left-6" : "left-1")} />
+                      className={cn("w-11 h-6 rounded-full transition-all relative flex-shrink-0",
+                        theme === "dark" ? "bg-accent-blue" : "bg-navy-200 dark:bg-navy-700")}>
+                      <div className={cn("w-4 h-4 rounded-full bg-white absolute top-1 transition-all",
+                        theme === "dark" ? "left-6" : "left-1")} />
                     </button>
                   </div>
+
+                  {/* Pro features with Upgrade button */}
                   {[
-                    { label: "Weekly digest emails",  desc: "Summary of your workspace activity every Monday" },
-                    { label: "AI insight alerts",     desc: "Get notified when Nexus detects something important" },
-                    { label: "Meeting summaries",     desc: "Email summaries after every meeting" },
+                    { label: "Weekly digest emails", desc: "Get a summary of your workspace activity every Monday"  },
+                    { label: "AI insight alerts",    desc: "Get notified when Nexus detects something important"    },
+                    { label: "Meeting summaries",    desc: "Receive email summaries after every meeting"            },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-navy-100 dark:border-navy-700 bg-navy-50/50 dark:bg-navy-800/30">
-                      <div>
-                        <p className="font-body font-medium text-navy-900 dark:text-cream-100 text-sm">{item.label}</p>
-                        <p className="font-body text-xs text-navy-500 dark:text-cream-400 mt-0.5">{item.desc}</p>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <p className="font-body font-medium text-navy-900 dark:text-cream-100 text-sm">{item.label}</p>
+                          <span className="px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-mono text-xs border border-amber-200 dark:border-amber-800">
+                            Pro
+                          </span>
+                        </div>
+                        <p className="font-body text-xs text-navy-500 dark:text-cream-400">{item.desc}</p>
                       </div>
-                      <span className="font-mono text-xs text-navy-400 px-2 py-1 rounded-lg bg-navy-100 dark:bg-navy-700">Pro</span>
+                      <button
+                        onClick={() => { setShowSettings(false); router.push("/pricing"); }}
+                        className="flex-shrink-0 ml-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-accent-blue to-accent-indigo text-white font-body text-xs font-semibold hover:opacity-90 transition-opacity shadow-sm"
+                      >
+                        Upgrade
+                      </button>
                     </div>
                   ))}
                 </div>
               )}
 
+              {/* ── SECURITY TAB ── */}
               {settingsTab === "security" && (
                 <div className="space-y-4">
                   <div className="p-4 rounded-xl border border-green-100 dark:border-green-900/40 bg-green-50/50 dark:bg-green-950/10">
@@ -459,7 +501,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="p-4 rounded-xl border border-red-100 dark:border-red-900 bg-red-50/50 dark:bg-red-950/20">
                     <p className="font-body font-medium text-red-700 dark:text-red-400 text-sm mb-1">Danger Zone</p>
-                    <p className="font-body text-xs text-red-500 mb-3">These actions cannot be undone.</p>
+                    <p className="font-body text-xs text-red-500 dark:text-red-400 mb-3">These actions cannot be undone.</p>
                     <button onClick={handleSignOut}
                       className="flex items-center gap-2 px-4 py-2 rounded-lg border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 font-body text-sm hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
                       <LogOut size={14} /> Sign out of all devices
@@ -480,7 +522,9 @@ export default function DashboardPage() {
             <div className="flex items-center justify-between px-6 py-4 border-b border-navy-100 dark:border-navy-800">
               <div>
                 <h2 className="font-display font-semibold text-lg text-navy-900 dark:text-cream-100">Integrations</h2>
-                <p className="font-body text-xs text-navy-400 dark:text-cream-500">{connectedTools.length} connected · {ALL_INTEGRATIONS.length - connectedTools.length} available</p>
+                <p className="font-body text-xs text-navy-400 dark:text-cream-500">
+                  {connectedTools.length} connected · {ALL_INTEGRATIONS.length - connectedTools.length} available
+                </p>
               </div>
               <button onClick={() => setShowIntegrations(false)} className="w-8 h-8 rounded-lg flex items-center justify-center text-navy-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors">
                 <X size={16} />
