@@ -1,3 +1,4 @@
+"use client";
 export default function OfflinePage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 gap-6">
@@ -6,10 +7,10 @@ export default function OfflinePage() {
       </div>
       <div>
         <h1 className="font-display text-3xl font-semibold text-navy-900 dark:text-cream-100 mb-2">
-          You're offline
+          You are offline
         </h1>
         <p className="font-body text-navy-500 dark:text-cream-400 text-sm max-w-xs leading-relaxed">
-          Nexus AI needs an internet connection to search your tools and generate responses. Please check your connection and try again.
+          Nexus AI needs an internet connection to work. Please check your connection and try again.
         </p>
       </div>
       <button
