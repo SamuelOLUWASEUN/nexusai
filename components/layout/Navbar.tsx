@@ -2,9 +2,47 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { createClient } from "@/supabase/client";
 import { Menu, X, Sun, Moon, ChevronDown } from "lucide-react";
 import { useThemeStore } from "@/lib/theme-store";
 import { cn } from "@/lib/utils";
+
+function NavbarAuth() {
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+  const supabase = createClient();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
+    const { data: listener } = supabase.auth.onAuthStateChange((_e, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  if (user) {
+    return (
+      <div className="flex items-center gap-2">
+        <Link href="/dashboard" className="btn-ghost text-sm hidden md:flex">
+          Dashboard
+        </Link>
+        <Link href="/dashboard"
+          className="w-8 h-8 rounded-full bg-gradient-to-br from-accent-blue to-accent-indigo flex items-center justify-center text-white font-bold text-sm">
+          {(user.user_metadata?.full_name || user.email)?.[0]?.toUpperCase()}
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Link href="/login" className="hidden md:flex btn-ghost text-sm">Sign in</Link>
+      <Link href="/signup" className="btn-primary text-sm px-5 py-2.5">
+        Get started free
+      </Link>
+    </>
+  );
+}
 
 const navLinks = [
   {
@@ -109,11 +147,13 @@ export function Navbar() {
           >
             {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
           </button>
-
-          <Link href="/login" className="hidden md:flex btn-ghost text-sm">Sign in</Link>
-          <Link href="/signup" className="btn-primary text-sm px-5 py-2.5">
-            Get started free
-          </Link>
+          <NavbarAuth />
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center text-navy-600 dark:text-cream-300 hover:bg-navy-100 dark:hover:bg-navy-800 transition-all"
+              >
+             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
 
           {/* Mobile menu button */}
           <button
