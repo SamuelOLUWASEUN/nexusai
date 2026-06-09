@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+            <path d="M9 2L15.5 6V12L9 16L2.5 12V6L9 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M9 2V16M2.5 6L15.5 12M15.5 6L2.5 12" stroke="white" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+        <span class="logo-text">Nexus <span class="logo-accent">AI</span></span>
+      </div>
+      <div class="header-actions">
+        <button id="open-dashboard" class="icon-btn" title="Open full dashboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+          </svg>
+        </button>
+        <button id="settings-btn" class="icon-btn" title="Settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Auth screen -->
+    <div id="auth-screen" class="screen hidden">
+      <div class="auth-content">
+        <div class="auth-icon">🔐</div>
+        <h2 class="auth-title">Sign in to Nexus AI</h2>
+        <p class="auth-desc">Connect your workspace to get AI-powered answers from any tab.</p>
+        <button id="signin-btn" class="btn-primary">Sign in to Nexus</button>
+        <p class="auth-signup">No account? <a href="https://nexusai.com/signup" target="_blank">Create one free</a></p>
+      </div>
+    </div>
+
+    <!-- Main screen -->
+    <div id="main-screen" class="screen hidden">
+
+      <!-- Connected tools bar -->
+      <div class="tools-bar">
+        <div class="tools-label">Searching</div>
+        <div class="tools-list" id="tools-list">
+          <span class="tool-tag">Slack</span>
+          <span class="tool-tag">Notion</span>
+          <span class="tool-tag">GitHub</span>
+          <span class="tool-tag more">+7 more</span>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="quick-actions" id="quick-actions">
+        <button class="quick-action" data-prompt="Summarize this page for me">
+          <span class="qa-icon">📄</span>
+          <span>Summarize page</span>
+        </button>
+        <button class="quick-action" data-prompt="Find related information in my connected tools about: ">
+          <span class="qa-icon">🔍</span>
+          <span>Find related</span>
+        </button>
+        <button class="quick-action" data-prompt="Draft a professional response to this email: ">
+          <span class="qa-icon">✍️</span>
+          <span>Draft reply</span>
+        </button>
+        <button class="quick-action" data-prompt="What action items or tasks are mentioned here?">
+          <span class="qa-icon">✅</span>
+          <span>Extract tasks</span>
+        </button>
+      </div>
+
+      <!-- Chat messages -->
+      <div class="messages" id="messages">
+        <div class="message assistant">
+          <div class="msg-avatar">
+            <svg width="12" height="12" viewBox="0 0 18 18" fill="none">
+              <path d="M9 2L15.5 6V12L9 16L2.5 12V6L9 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="msg-bubble">
+            Hi! I'm Nexus. Ask me anything about your company or this page.
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <div class="input-wrap">
+          <textarea
+            id="chat-input"
+            placeholder="Ask Nexus about this page or your tools..."
+            rows="1"
+          ></textarea>
+          <button id="send-btn" class="send-btn" disabled>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+        <p class="input-hint">Enter to send · Shift+Enter for new line</p>
+      </div>
+    </div>
+
+    <!-- Settings screen -->
+    <div id="settings-screen" class="screen hidden">
+      <div class="settings-header">
+        <button id="back-btn" class="icon-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <span class="settings-title">Settings</span>
+      </div>
+      <div class="settings-content">
+        <div class="setting-group">
+          <label class="setting-label">Account</label>
+          <div class="setting-card" id="account-info">
+            <div class="account-avatar" id="account-avatar">U</div>
+            <div class="account-details">
+              <p class="account-name" id="account-name">Loading...</p>
+              <p class="account-email" id="account-email">...</p>
+            </div>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Nexus AI URL</label>
+          <input type="text" id="nexus-url" class="setting-input" value="https://nexusai.com" placeholder="https://nexusai.com"/>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Theme</label>
+          <div class="theme-toggle">
+            <button class="theme-btn active" id="theme-light">Light</button>
+            <button class="theme-btn" id="theme-dark">Dark</button>
+            <button class="theme-btn" id="theme-system">System</button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">Keyboard shortcut</label>
+          <div class="shortcut-display">
+            <kbd>Ctrl</kbd><span>+</span><kbd>Shift</kbd><span>+</span><kbd>N</kbd>
+          </div>
+        </div>
+        <button id="signout-btn" class="btn-danger">Sign out</button>
+      </div>
+    </div>
+
+  </div>
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

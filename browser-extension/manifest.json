@@ -1,0 +1,69 @@
+{
+  "manifest_version": 3,
+  "name": "Nexus AI",
+  "version": "1.0.0",
+  "description": "Ask Nexus AI anything about your company from any tab. Search your tools, summarize pages and draft responses instantly.",
+  "homepage_url": "https://nexusai.com",
+
+  "icons": {
+    "16":  "icons/icon-16.png",
+    "32":  "icons/icon-32.png",
+    "48":  "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16":  "icons/icon-16.png",
+      "32":  "icons/icon-32.png",
+      "48":  "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    },
+    "default_title": "Ask Nexus AI"
+  },
+
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches":       ["<all_urls>"],
+      "js":            ["content/content.js"],
+      "css":           ["content/content.css"],
+      "run_at":        "document_idle",
+      "all_frames":    false
+    }
+  ],
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "notifications"
+  ],
+
+  "host_permissions": [
+    "https://nexusai.com/*",
+    "https://*.nexusai.com/*"
+  ],
+
+  "commands": {
+    "open-nexus": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+N",
+        "mac":     "Command+Shift+N"
+      },
+      "description": "Open Nexus AI assistant"
+    }
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["content/sidebar.html", "icons/*"],
+      "matches":   ["<all_urls>"]
+    }
+  ]
+}
