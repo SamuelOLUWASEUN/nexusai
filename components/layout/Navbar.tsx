@@ -48,17 +48,17 @@ const navLinks = [
   {
     label: "Product",
     children: [
-      { href: "/features",  label: "Features",     desc: "Everything Nexus can do" },
-      { href: "/integrations", label: "Integrations", desc: "100+ tool connections"   },
-      { href: "/security",  label: "Security",     desc: "Enterprise-grade protection"},
+      { href: "/features",     label: "Features",     desc: "Everything Nexus can do"      },
+      { href: "/integrations", label: "Integrations", desc: "100+ tool connections"        },
+      { href: "/security",     label: "Security",     desc: "Enterprise-grade protection"  },
     ],
   },
   {
     label: "Solutions",
     children: [
-      { href: "/solutions/startups",    label: "For Startups",    desc: "Move fast, stay aligned"      },
-      { href: "/solutions/enterprise",  label: "For Enterprise",  desc: "Scale across your org"        },
-      { href: "/solutions/engineering", label: "For Engineering", desc: "Ship faster with less friction"},
+      { href: "/solutions/startups",    label: "For Startups",    desc: "Move fast, stay aligned"       },
+      { href: "/solutions/enterprise",  label: "For Enterprise",  desc: "Scale across your org"         },
+      { href: "/solutions/engineering", label: "For Engineering", desc: "Ship faster with less friction" },
     ],
   },
   { label: "Pricing", href: "/pricing" },
@@ -66,10 +66,10 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const pathname  = usePathname();
+  const pathname = usePathname();
   const { theme, toggleTheme } = useThemeStore();
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled]           = useState(false);
+  const [mobileOpen, setMobileOpen]       = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   useEffect(() => {
@@ -77,6 +77,9 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Don't render navbar on dashboard
+  if (pathname?.startsWith("/dashboard")) return null;
 
   return (
     <header className={cn(
@@ -86,6 +89,7 @@ export function Navbar() {
         : "bg-transparent py-5"
     )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 rounded-lg bg-navy-900 dark:bg-accent-blue flex items-center justify-center shadow-navy group-hover:shadow-blue transition-all duration-200">
@@ -110,7 +114,8 @@ export function Navbar() {
                   "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-body font-medium transition-all duration-150",
                   "text-navy-600 dark:text-cream-300 hover:text-navy-900 dark:hover:text-white hover:bg-navy-50 dark:hover:bg-navy-800"
                 )}>
-                  {link.label} <ChevronDown size={14} className={cn("transition-transform", activeDropdown === link.label && "rotate-180")} />
+                  {link.label}
+                  <ChevronDown size={14} className={cn("transition-transform", activeDropdown === link.label && "rotate-180")} />
                 </button>
                 {activeDropdown === link.label && (
                   <div className="absolute top-full left-0 pt-2 w-64 animate-fade-up">
@@ -118,7 +123,9 @@ export function Navbar() {
                       {link.children.map(child => (
                         <Link key={child.href} href={child.href}
                           className="flex flex-col gap-0.5 px-3 py-2.5 rounded-xl hover:bg-navy-50 dark:hover:bg-navy-700 transition-colors group">
-                          <span className="font-body font-semibold text-sm text-navy-900 dark:text-cream-100 group-hover:text-accent-blue transition-colors">{child.label}</span>
+                          <span className="font-body font-semibold text-sm text-navy-900 dark:text-cream-100 group-hover:text-accent-blue transition-colors">
+                            {child.label}
+                          </span>
                           <span className="font-body text-xs text-navy-400 dark:text-cream-400">{child.desc}</span>
                         </Link>
                       ))}
@@ -132,7 +139,9 @@ export function Navbar() {
                 pathname === link.href
                   ? "bg-navy-50 dark:bg-navy-800 text-navy-900 dark:text-white"
                   : "text-navy-600 dark:text-cream-300 hover:text-navy-900 dark:hover:text-white hover:bg-navy-50 dark:hover:bg-navy-800"
-              )}>{link.label}</Link>
+              )}>
+                {link.label}
+              </Link>
             )
           ))}
         </nav>
@@ -143,12 +152,15 @@ export function Navbar() {
           <button
             onClick={toggleTheme}
             className="w-9 h-9 rounded-lg flex items-center justify-center text-navy-500 dark:text-cream-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-all"
-            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Switch to light" : "Switch to dark"}
           >
             {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
           </button>
+
+          {/* Auth buttons */}
           <NavbarAuth />
-          {/* Mobile menu button */}
+
+          {/* Mobile hamburger — only ONE, only on marketing pages */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center text-navy-600 dark:text-cream-300 hover:bg-navy-100 dark:hover:bg-navy-800 transition-all"
@@ -158,30 +170,38 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown menu */}
       {mobileOpen && (
         <div className="lg:hidden border-t border-navy-100 dark:border-navy-800 bg-white dark:bg-navy-950 px-4 py-4 space-y-1 animate-fade-in">
           {navLinks.map((link) => (
             link.children ? (
               <div key={link.label}>
-                <p className="px-3 py-1.5 text-xs font-mono font-medium text-navy-400 dark:text-cream-500 uppercase tracking-wider">{link.label}</p>
+                <p className="px-3 py-1.5 text-xs font-mono font-medium text-navy-400 dark:text-cream-500 uppercase tracking-wider">
+                  {link.label}
+                </p>
                 {link.children.map(child => (
-                  <Link key={child.href} href={child.href} onClick={() => setMobileOpen(false)}
+                  <Link key={child.href} href={child.href}
+                    onClick={() => setMobileOpen(false)}
                     className="block px-3 py-2.5 rounded-xl text-sm font-body text-navy-700 dark:text-cream-200 hover:bg-navy-50 dark:hover:bg-navy-800 transition-colors">
                     {child.label}
                   </Link>
                 ))}
               </div>
             ) : (
-              <Link key={link.href} href={link.href!} onClick={() => setMobileOpen(false)}
+              <Link key={link.href} href={link.href!}
+                onClick={() => setMobileOpen(false)}
                 className="block px-3 py-2.5 rounded-xl text-sm font-body text-navy-700 dark:text-cream-200 hover:bg-navy-50 dark:hover:bg-navy-800 transition-colors">
                 {link.label}
               </Link>
             )
           ))}
           <div className="pt-3 flex flex-col gap-2">
-            <Link href="/login" className="btn-secondary w-full text-center" onClick={() => setMobileOpen(false)}>Sign in</Link>
-            <Link href="/signup" className="btn-primary w-full text-center" onClick={() => setMobileOpen(false)}>Get started free</Link>
+            <Link href="/login" className="btn-secondary w-full text-center" onClick={() => setMobileOpen(false)}>
+              Sign in
+            </Link>
+            <Link href="/signup" className="btn-primary w-full text-center" onClick={() => setMobileOpen(false)}>
+              Get started free
+            </Link>
           </div>
         </div>
       )}
