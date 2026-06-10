@@ -148,13 +148,6 @@ export function Navbar() {
             {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
           </button>
           <NavbarAuth />
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center text-navy-600 dark:text-cream-300 hover:bg-navy-100 dark:hover:bg-navy-800 transition-all"
-              >
-             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
