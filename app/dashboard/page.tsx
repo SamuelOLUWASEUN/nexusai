@@ -31,11 +31,11 @@ const SUGGESTED_PROMPTS = [
 ];
 
 const ALL_INTEGRATIONS = [
-  { name: "Slack",        icon: "💬", category: "Communication", connected: true  },
-  { name: "Notion",       icon: "📝", category: "Docs",          connected: true  },
-  { name: "GitHub",       icon: "🐙", category: "Code",          connected: true  },
-  { name: "Linear",       icon: "◈",  category: "Project",       connected: true  },
-  { name: "Google Drive", icon: "📁", category: "Docs",          connected: true  },
+  { name: "Slack",        icon: "💬", category: "Communication", connected: false },
+  { name: "Notion",       icon: "📝", category: "Docs",          connected: false },
+  { name: "GitHub",       icon: "🐙", category: "Code",          connected: false },
+  { name: "Linear",       icon: "◈",  category: "Project",       connected: false },
+  { name: "Google Drive", icon: "📁", category: "Docs",          connected: false },
   { name: "Jira",         icon: "🔷", category: "Project",       connected: false },
   { name: "HubSpot",      icon: "🟠", category: "CRM",           connected: false },
   { name: "Zoom",         icon: "📹", category: "Communication", connected: false },
@@ -79,6 +79,21 @@ export default function DashboardPage() {
         company:   data.user.user_metadata?.company   || "",
         role:      data.user.user_metadata?.role      || "",
       });
+
+      // Handle OAuth redirects
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("connected") === "notion") {
+        setIntegrations(prev => prev.map(i =>
+          i.name === "Notion" ? { ...i, connected: true } : i
+        ));
+        toast.success("Notion connected! Indexing your pages...");
+        fetch("/api/notion/index", { method: "POST" });
+        window.history.replaceState({}, "", "/dashboard");
+      }
+      if (params.get("error")) {
+        toast.error("Failed to connect. Please try again.");
+        window.history.replaceState({}, "", "/dashboard");
+      }
     });
   }, []);
 
@@ -138,9 +153,23 @@ export default function DashboardPage() {
     setSavingProfile(false);
   }
 
-  function toggleIntegration(name: string) {
+  async function toggleIntegration(name: string) {
     const integration = integrations.find(i => i.name === name);
-    setIntegrations(prev => prev.map(i => i.name === name ? { ...i, connected: !i.connected } : i));
+
+    if (name === "Notion" && !integration?.connected) {
+      try {
+        const res  = await fetch("/api/notion/connect");
+        const data = await res.json();
+        if (data.url) window.location.href = data.url;
+      } catch {
+        toast.error("Failed to connect Notion");
+      }
+      return;
+    }
+
+    setIntegrations(prev => prev.map(i =>
+      i.name === name ? { ...i, connected: !i.connected } : i
+    ));
     toast.success(integration?.connected ? `${name} disconnected` : `${name} connected!`);
   }
 
@@ -151,18 +180,13 @@ return (
 
       {/* Mobile overlay */}
       {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
+        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
       {/* SIDEBAR */}
       <aside className={cn(
         "fixed lg:relative inset-y-0 left-0 z-40 flex flex-col bg-white dark:bg-navy-900 border-r border-navy-100 dark:border-navy-800 transition-all duration-300",
-        // Mobile: slide in/out
         sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
-        // Desktop: collapse
         sidebarCollapsed ? "lg:w-16" : "lg:w-64",
         "w-72"
       )}>
@@ -170,10 +194,7 @@ return (
         {/* Logo row */}
         <div className="flex items-center justify-between p-4 border-b border-navy-100 dark:border-navy-800 flex-shrink-0">
           {!sidebarCollapsed && (
-            <button
-              onClick={() => router.push("/")}
-              className="flex items-center gap-2 group"
-            >
+            <button onClick={() => router.push("/")} className="flex items-center gap-2 group">
               <div className="w-7 h-7 rounded-lg bg-navy-900 dark:bg-accent-blue flex items-center justify-center flex-shrink-0">
                 <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
                   <path d="M9 2L15.5 6V12L9 16L2.5 12V6L9 2Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
@@ -194,18 +215,12 @@ return (
             </button>
           )}
           <div className="flex items-center gap-1">
-            {/* Close on mobile */}
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden w-7 h-7 rounded-lg flex items-center justify-center text-navy-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors"
-            >
+            <button onClick={() => setSidebarOpen(false)}
+              className="lg:hidden w-7 h-7 rounded-lg flex items-center justify-center text-navy-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors">
               <X size={15} />
             </button>
-            {/* Collapse on desktop */}
-            <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="hidden lg:flex w-7 h-7 rounded-lg items-center justify-center text-navy-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors"
-            >
+            <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="hidden lg:flex w-7 h-7 rounded-lg items-center justify-center text-navy-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors">
               <ChevronLeft size={15} className={cn("transition-transform", sidebarCollapsed && "rotate-180")} />
             </button>
           </div>
@@ -214,18 +229,12 @@ return (
         {/* New chat */}
         <div className="p-3 border-b border-navy-100 dark:border-navy-800 flex-shrink-0">
           {sidebarCollapsed ? (
-            <button
-              onClick={() => { setMessages([]); setApiError(""); }}
-              className="w-full flex items-center justify-center p-2 rounded-lg bg-navy-900 dark:bg-accent-blue text-white hover:opacity-90 transition-opacity"
-              title="New Chat"
-            >
+            <button onClick={() => { setMessages([]); setApiError(""); }}
+              className="w-full flex items-center justify-center p-2 rounded-lg bg-navy-900 dark:bg-accent-blue text-white hover:opacity-90 transition-opacity" title="New Chat">
               <Plus size={16} />
             </button>
           ) : (
-            <button
-              onClick={() => { setMessages([]); setApiError(""); }}
-              className="btn-primary w-full py-2.5 text-sm"
-            >
+            <button onClick={() => { setMessages([]); setApiError(""); }} className="btn-primary w-full py-2.5 text-sm">
               <Plus size={15} /> New Chat
             </button>
           )}
@@ -242,24 +251,14 @@ return (
             )}
             <div className="space-y-0.5">
               {connectedTools.map(tool => (
-                <div key={tool.name} className={cn(
-                  "flex items-center gap-2.5 px-2 py-1.5 rounded-lg",
-                  sidebarCollapsed && "justify-center"
-                )}>
+                <div key={tool.name} className={cn("flex items-center gap-2.5 px-2 py-1.5 rounded-lg", sidebarCollapsed && "justify-center")}>
                   <div className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" />
-                  {!sidebarCollapsed && (
-                    <span className="font-body text-sm text-navy-600 dark:text-cream-300 truncate">{tool.name}</span>
-                  )}
+                  {!sidebarCollapsed && <span className="font-body text-sm text-navy-600 dark:text-cream-300 truncate">{tool.name}</span>}
                 </div>
               ))}
-              <button
-                onClick={() => setShowIntegrations(true)}
-                className={cn(
-                  "flex items-center gap-2 px-2 py-1.5 rounded-lg text-accent-blue hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors w-full mt-1",
-                  sidebarCollapsed && "justify-center"
-                )}
-                title="Add integration"
-              >
+              <button onClick={() => setShowIntegrations(true)}
+                className={cn("flex items-center gap-2 px-2 py-1.5 rounded-lg text-accent-blue hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors w-full mt-1", sidebarCollapsed && "justify-center")}
+                title="Add integration">
                 <Plus size={13} />
                 {!sidebarCollapsed && <span className="font-body text-sm font-medium">Add integration</span>}
               </button>
@@ -269,24 +268,16 @@ return (
           {/* Quick actions */}
           <div className="p-3">
             {!sidebarCollapsed && (
-              <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider mb-2 px-1">
-                Quick Actions
-              </p>
+              <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider mb-2 px-1">Quick Actions</p>
             )}
             <div className="space-y-0.5">
               {QUICK_ACTIONS.map(action => (
                 <button key={action.label}
                   onClick={() => { setInput(action.prompt); inputRef.current?.focus(); setSidebarOpen(false); }}
-                  className={cn(
-                    "flex items-center gap-2.5 w-full px-2 py-2 rounded-lg hover:bg-navy-50 dark:hover:bg-navy-800 transition-colors text-left group",
-                    sidebarCollapsed && "justify-center"
-                  )}
-                  title={action.label}
-                >
+                  className={cn("flex items-center gap-2.5 w-full px-2 py-2 rounded-lg hover:bg-navy-50 dark:hover:bg-navy-800 transition-colors text-left group", sidebarCollapsed && "justify-center")}
+                  title={action.label}>
                   <action.icon size={15} className="text-navy-400 group-hover:text-accent-blue transition-colors flex-shrink-0" />
-                  {!sidebarCollapsed && (
-                    <span className="font-body text-sm text-navy-600 dark:text-cream-300">{action.label}</span>
-                  )}
+                  {!sidebarCollapsed && <span className="font-body text-sm text-navy-600 dark:text-cream-300">{action.label}</span>}
                 </button>
               ))}
             </div>
@@ -341,11 +332,8 @@ return (
         {/* Top bar */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-navy-100 dark:border-navy-800 bg-white dark:bg-navy-900 flex-shrink-0">
           <div className="flex items-center gap-3">
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-navy-500 dark:text-cream-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors"
-            >
+            <button onClick={() => setSidebarOpen(true)}
+              className="lg:hidden w-8 h-8 rounded-lg flex items-center justify-center text-navy-500 dark:text-cream-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors">
               <Menu size={18} />
             </button>
             <div className="flex items-center gap-2">
@@ -360,9 +348,7 @@ return (
           </div>
           <div className="flex items-center gap-2">
             <button onClick={() => router.push("/")}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-navy-500 dark:text-cream-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors"
-              title="Go to homepage"
-            >
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-navy-500 dark:text-cream-400 hover:bg-navy-100 dark:hover:bg-navy-800 transition-colors" title="Go to homepage">
               <Home size={16} />
             </button>
             <button onClick={toggleTheme}
@@ -391,7 +377,7 @@ return (
                   Good {new Date().getHours() < 12 ? "morning" : new Date().getHours() < 17 ? "afternoon" : "evening"}, {firstName}!
                 </h2>
                 <p className="font-body text-navy-500 dark:text-cream-400 text-sm mb-8">
-                  Ask me anything. I'm connected to {connectedTools.map(t => t.name).join(", ")}.
+                  Ask me anything. I'm connected to {connectedTools.length > 0 ? connectedTools.map(t => t.name).join(", ") : "no tools yet — add one below!"}.
                 </p>
                 <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider mb-4">Try asking...</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
@@ -523,8 +509,7 @@ return (
                         </span>
                         <button
                           onClick={() => { setShowSettings(false); router.push("/pricing"); }}
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-accent-blue to-accent-indigo text-white font-mono text-xs font-semibold hover:opacity-90 transition-opacity"
-                        >
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-accent-blue to-accent-indigo text-white font-mono text-xs font-semibold hover:opacity-90 transition-opacity">
                           Upgrade →
                         </button>
                       </div>
@@ -579,9 +564,9 @@ return (
                     </button>
                   </div>
                   {[
-                    { label: "Weekly digest emails", desc: "Get a summary of your workspace activity every Monday"  },
-                    { label: "AI insight alerts",    desc: "Get notified when Nexus detects something important"    },
-                    { label: "Meeting summaries",    desc: "Receive email summaries after every meeting"            },
+                    { label: "Weekly digest emails", desc: "Get a summary of your workspace activity every Monday" },
+                    { label: "AI insight alerts",    desc: "Get notified when Nexus detects something important"   },
+                    { label: "Meeting summaries",    desc: "Receive email summaries after every meeting"           },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-navy-100 dark:border-navy-700 bg-navy-50/50 dark:bg-navy-800/30">
                       <div className="flex-1 min-w-0 mr-3">
@@ -595,8 +580,7 @@ return (
                       </div>
                       <button
                         onClick={() => { setShowSettings(false); router.push("/pricing"); }}
-                        className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-accent-blue to-accent-indigo text-white font-body text-xs font-semibold hover:opacity-90 transition-opacity shadow-sm"
-                      >
+                        className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-accent-blue to-accent-indigo text-white font-body text-xs font-semibold hover:opacity-90 transition-opacity shadow-sm">
                         Upgrade
                       </button>
                     </div>
@@ -656,27 +640,35 @@ return (
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
-              <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider px-2 mb-2">Connected</p>
-              {integrations.filter(i => i.connected).map(integration => (
-                <div key={integration.name} className="flex items-center justify-between p-3 rounded-xl border border-green-100 dark:border-green-900/40 bg-green-50/50 dark:bg-green-950/10">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl">{integration.icon}</span>
-                    <div>
-                      <p className="font-body font-medium text-navy-900 dark:text-cream-100 text-sm">{integration.name}</p>
-                      <p className="font-body text-xs text-navy-400 dark:text-cream-500">{integration.category}</p>
+
+              {/* Connected */}
+              {connectedTools.length > 0 && (
+                <>
+                  <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider px-2 mb-2">Connected</p>
+                  {integrations.filter(i => i.connected).map(integration => (
+                    <div key={integration.name} className="flex items-center justify-between p-3 rounded-xl border border-green-100 dark:border-green-900/40 bg-green-50/50 dark:bg-green-950/10">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{integration.icon}</span>
+                        <div>
+                          <p className="font-body font-medium text-navy-900 dark:text-cream-100 text-sm">{integration.name}</p>
+                          <p className="font-body text-xs text-navy-400 dark:text-cream-500">{integration.category}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-mono text-xs">
+                          <Check size={10} /> Connected
+                        </span>
+                        <button onClick={() => toggleIntegration(integration.name)}
+                          className="w-7 h-7 rounded-lg flex items-center justify-center text-navy-400 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-500 transition-colors">
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-mono text-xs">
-                      <Check size={10} /> Connected
-                    </span>
-                    <button onClick={() => toggleIntegration(integration.name)}
-                      className="w-7 h-7 rounded-lg flex items-center justify-center text-navy-400 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-500 transition-colors">
-                      <Trash2 size={13} />
-                    </button>
-                  </div>
-                </div>
-              ))}
+                  ))}
+                </>
+              )}
+
+              {/* Available */}
               <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider px-2 mt-4 mb-2">Available</p>
               {integrations.filter(i => !i.connected).map(integration => (
                 <div key={integration.name} className="flex items-center justify-between p-3 rounded-xl border border-navy-100 dark:border-navy-700 hover:border-navy-200 dark:hover:border-navy-600 transition-colors">
@@ -688,8 +680,14 @@ return (
                     </div>
                   </div>
                   <button onClick={() => toggleIntegration(integration.name)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-accent-blue/30 text-accent-blue font-body text-xs font-medium hover:bg-accent-blue/10 transition-colors">
-                    <Plug size={11} /> Connect
+                    className={cn(
+                      "flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-body text-xs font-medium transition-colors",
+                      integration.name === "Notion"
+                        ? "bg-accent-blue text-white hover:bg-blue-600"
+                        : "border border-accent-blue/30 text-accent-blue hover:bg-accent-blue/10"
+                    )}>
+                    <Plug size={11} />
+                    {integration.name === "Notion" ? "Connect Notion" : "Connect"}
                   </button>
                 </div>
               ))}
