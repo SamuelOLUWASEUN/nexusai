@@ -153,25 +153,23 @@ export default function DashboardPage() {
     setSavingProfile(false);
   }
 
-  async function toggleIntegration(name: string) {
-    const integration = integrations.find(i => i.name === name);
+async function toggleIntegration(name: string) {
+  const integration = integrations.find(i => i.name === name);
 
-    if (name === "Notion" && !integration?.connected) {
-      try {
-        const res  = await fetch("/api/notion/connect");
-        const data = await res.json();
-        if (data.url) window.location.href = data.url;
-      } catch {
-        toast.error("Failed to connect Notion");
-      }
+  if (name === "Notion" && !integration?.connected) {
+    if (!user?.id) {
+      toast.error("Please sign in first");
       return;
     }
-
-    setIntegrations(prev => prev.map(i =>
-      i.name === name ? { ...i, connected: !i.connected } : i
-    ));
-    toast.success(integration?.connected ? `${name} disconnected` : `${name} connected!`);
+    window.location.href = "/api/notion/connect?user_id=" + user.id;
+    return;
   }
+
+  setIntegrations(prev => prev.map(i =>
+    i.name === name ? { ...i, connected: !i.connected } : i
+  ));
+  toast.success(integration?.connected ? `${name} disconnected` : `${name} connected!`);
+}
 
   const connectedTools = integrations.filter(i => i.connected);
   const firstName = user?.user_metadata?.full_name?.split(" ")[0] ?? "there";
