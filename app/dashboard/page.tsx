@@ -4,7 +4,7 @@ import {
   Send, Plus, Sparkles, Search, FileText, Video, BarChart3,
   Settings, LogOut, ChevronRight, Loader2, AlertCircle, X,
   User, Shield, Bell, Moon, Sun, Check, Plug, Trash2,
-  Menu, Home, ChevronLeft
+  Menu, Home, ChevronLeft, MessageSquare
 } from "lucide-react";
 import { createClient } from "@/supabase/client";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,8 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useThemeStore } from "@/lib/theme-store";
 
-type Message = { role: "user" | "assistant"; content: string; id: string };
+type Message      = { role: "user" | "assistant"; content: string; id: string };
+type Conversation = { id: string; title: string; created_at: string; updated_at: string };
 
 const QUICK_ACTIONS = [
   { icon: Search,    label: "Search",        prompt: "Search across all my connected tools for: "                    },
@@ -69,54 +70,106 @@ export default function DashboardPage() {
   const [profileForm, setProfileForm]           = useState({ full_name: "", company: "", role: "" });
   const [sidebarOpen, setSidebarOpen]           = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [conversations, setConversations]       = useState<Conversation[]>([]);
+  const [conversationId, setConversationId]     = useState<string | null>(null);
 
-useEffect(() => {
-  supabase.auth.getUser().then(async ({ data }) => {
-    if (!data.user) { router.push("/login"); return; }
-    setUser(data.user);
-    setProfileForm({
-      full_name: data.user.user_metadata?.full_name || "",
-      company:   data.user.user_metadata?.company   || "",
-      role:      data.user.user_metadata?.role      || "",
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (!data.user) { router.push("/login"); return; }
+      setUser(data.user);
+      setProfileForm({
+        full_name: data.user.user_metadata?.full_name || "",
+        company:   data.user.user_metadata?.company   || "",
+        role:      data.user.user_metadata?.role      || "",
+      });
+
+      // Load connected integrations
+      const { data: connectedIntegrations } = await supabase
+        .from("user_integrations")
+        .select("tool_slug")
+        .eq("user_id", data.user.id)
+        .eq("connected", true);
+
+      if (connectedIntegrations && connectedIntegrations.length > 0) {
+        const connectedSlugs = connectedIntegrations.map(i => i.tool_slug);
+        setIntegrations(prev => prev.map(i => ({
+          ...i,
+          connected: connectedSlugs.includes(i.name.toLowerCase().replace(" ", "_")) ||
+                     connectedSlugs.includes(i.name.toLowerCase()) ||
+                     connectedSlugs.includes(i.name.toLowerCase().replace(" ", "-"))
+        })));
+      }
+
+      // Load conversation history
+      loadConversations();
+
+      // Handle OAuth redirects
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("connected") === "notion") {
+        setIntegrations(prev => prev.map(i =>
+          i.name === "Notion" ? { ...i, connected: true } : i
+        ));
+        toast.success("Notion connected! Indexing your pages...");
+        fetch("/api/notion/index", { method: "POST" });
+        window.history.replaceState({}, "", "/dashboard");
+      }
+      if (params.get("error")) {
+        toast.error("Failed to connect. Please try again.");
+        window.history.replaceState({}, "", "/dashboard");
+      }
     });
-
-    // Load connected integrations from Supabase
-    const { data: connectedIntegrations } = await supabase
-      .from("user_integrations")
-      .select("tool_slug")
-      .eq("user_id", data.user.id)
-      .eq("connected", true);
-
-    if (connectedIntegrations && connectedIntegrations.length > 0) {
-      const connectedSlugs = connectedIntegrations.map(i => i.tool_slug);
-      setIntegrations(prev => prev.map(i => ({
-        ...i,
-        connected: connectedSlugs.includes(i.name.toLowerCase().replace(" ", "_")) ||
-                   connectedSlugs.includes(i.name.toLowerCase()) ||
-                   connectedSlugs.includes(i.name.toLowerCase().replace(" ", "-"))
-      })));
-    }
-
-    // Handle OAuth redirects
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("connected") === "notion") {
-      setIntegrations(prev => prev.map(i =>
-        i.name === "Notion" ? { ...i, connected: true } : i
-      ));
-      toast.success("Notion connected! Indexing your pages...");
-      fetch("/api/notion/index", { method: "POST" });
-      window.history.replaceState({}, "", "/dashboard");
-    }
-    if (params.get("error")) {
-      toast.error("Failed to connect. Please try again.");
-      window.history.replaceState({}, "", "/dashboard");
-    }
-  });
-}, []);
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  async function loadConversations() {
+    try {
+      const res  = await fetch("/api/conversations");
+      const data = await res.json();
+      if (data.conversations) setConversations(data.conversations);
+    } catch (err) {
+      console.error("Failed to load conversations:", err);
+    }
+  }
+
+  async function startNewConversation() {
+    setMessages([]);
+    setApiError("");
+    setConversationId(null);
+    setSidebarOpen(false);
+  }
+
+  async function loadConversation(id: string) {
+    try {
+      const res  = await fetch("/api/conversations/messages?conversation_id=" + id);
+      const data = await res.json();
+      if (data.messages) {
+        setMessages(data.messages.map((m: any) => ({
+          role:    m.role,
+          content: m.content,
+          id:      m.id,
+        })));
+        setConversationId(id);
+        setSidebarOpen(false);
+      }
+    } catch (err) {
+      console.error("Failed to load conversation:", err);
+    }
+  }
+
+  async function deleteConversation(id: string, e: React.MouseEvent) {
+    e.stopPropagation();
+    await fetch("/api/conversations", {
+      method:  "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ id }),
+    });
+    setConversations(prev => prev.filter(c => c.id !== id));
+    if (conversationId === id) startNewConversation();
+    toast.success("Conversation deleted");
+  }
 
   async function sendMessage(content?: string) {
     const text = (content ?? input).trim();
@@ -139,7 +192,43 @@ useEffect(() => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
       if (!data.content) throw new Error("Empty response from AI");
-      setMessages(prev => [...prev, { role: "assistant", content: data.content, id: (Date.now() + 1).toString() }]);
+
+      const assistantMsg: Message = { role: "assistant", content: data.content, id: (Date.now() + 1).toString() };
+      setMessages(prev => [...prev, assistantMsg]);
+
+      // Save to Supabase
+      let currentConvId = conversationId;
+      if (!currentConvId) {
+        const title   = text.slice(0, 60) + (text.length > 60 ? "..." : "");
+        const convRes = await fetch("/api/conversations", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body:    JSON.stringify({ title }),
+        });
+        const convData = await convRes.json();
+        currentConvId  = convData.conversation?.id;
+        setConversationId(currentConvId ?? null);
+        loadConversations();
+      }
+
+      if (currentConvId) {
+        await fetch("/api/conversations/messages", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body:    JSON.stringify({ conversation_id: currentConvId, role: "user", content: text }),
+        });
+        await fetch("/api/conversations/messages", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body:    JSON.stringify({ conversation_id: currentConvId, role: "assistant", content: data.content }),
+        });
+        await fetch("/api/conversations", {
+          method:  "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body:    JSON.stringify({ id: currentConvId, title: text.slice(0, 60) }),
+        });
+        loadConversations();
+      }
     } catch (err: any) {
       const msg = err?.message || "Failed to get a response.";
       setApiError(msg);
@@ -170,29 +259,25 @@ useEffect(() => {
     setSavingProfile(false);
   }
 
-async function toggleIntegration(name: string) {
-  const integration = integrations.find(i => i.name === name);
-
-  if (name === "Notion" && !integration?.connected) {
-    if (!user?.id) { toast.error("Please sign in first"); return; }
-    window.location.href = "/api/notion/connect?user_id=" + user.id;
-    return;
+  async function toggleIntegration(name: string) {
+    const integration = integrations.find(i => i.name === name);
+    if (name === "Notion" && !integration?.connected) {
+      if (!user?.id) { toast.error("Please sign in first"); return; }
+      window.location.href = "/api/notion/connect?user_id=" + user.id;
+      return;
+    }
+    const toolSlug = name.toLowerCase().replace(" ", "_");
+    if (integration?.connected) {
+      await supabase.from("user_integrations")
+        .update({ connected: false })
+        .eq("user_id", user.id)
+        .eq("tool_slug", toolSlug);
+    }
+    setIntegrations(prev => prev.map(i =>
+      i.name === name ? { ...i, connected: !i.connected } : i
+    ));
+    toast.success(integration?.connected ? `${name} disconnected` : `${name} connected!`);
   }
-
-  // Update Supabase
-  const toolSlug = name.toLowerCase().replace(" ", "_");
-  if (integration?.connected) {
-    await supabase.from("user_integrations")
-      .update({ connected: false })
-      .eq("user_id", user.id)
-      .eq("tool_slug", toolSlug);
-  }
-
-  setIntegrations(prev => prev.map(i =>
-    i.name === name ? { ...i, connected: !i.connected } : i
-  ));
-  toast.success(integration?.connected ? `${name} disconnected` : `${name} connected!`);
-}
 
   const connectedTools = integrations.filter(i => i.connected);
   const firstName = user?.user_metadata?.full_name?.split(" ")[0] ?? "there";
@@ -250,19 +335,20 @@ return (
         {/* New chat */}
         <div className="p-3 border-b border-navy-100 dark:border-navy-800 flex-shrink-0">
           {sidebarCollapsed ? (
-            <button onClick={() => { setMessages([]); setApiError(""); }}
+            <button onClick={startNewConversation}
               className="w-full flex items-center justify-center p-2 rounded-lg bg-navy-900 dark:bg-accent-blue text-white hover:opacity-90 transition-opacity" title="New Chat">
               <Plus size={16} />
             </button>
           ) : (
-            <button onClick={() => { setMessages([]); setApiError(""); }} className="btn-primary w-full py-2.5 text-sm">
+            <button onClick={startNewConversation} className="btn-primary w-full py-2.5 text-sm">
               <Plus size={15} /> New Chat
             </button>
           )}
         </div>
 
-        {/* Scrollable content */}
+        {/* Scrollable sidebar content */}
         <div className="flex-1 overflow-y-auto">
+
           {/* Connected tools */}
           <div className="p-3 border-b border-navy-100 dark:border-navy-800">
             {!sidebarCollapsed && (
@@ -285,6 +371,53 @@ return (
               </button>
             </div>
           </div>
+
+          {/* Chat History */}
+          {conversations.length > 0 && (
+            <div className="p-3 border-b border-navy-100 dark:border-navy-800">
+              {!sidebarCollapsed && (
+                <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider mb-2 px-1">
+                  Recent Chats
+                </p>
+              )}
+              <div className="space-y-0.5">
+                {conversations.slice(0, 15).map(conv => (
+                  <div key={conv.id}
+                    onClick={() => loadConversation(conv.id)}
+                    className={cn(
+                      "flex items-center justify-between px-2 py-1.5 rounded-lg cursor-pointer group transition-colors",
+                      conversationId === conv.id
+                        ? "bg-accent-blue/10 text-accent-blue"
+                        : "hover:bg-navy-50 dark:hover:bg-navy-800",
+                      sidebarCollapsed && "justify-center"
+                    )}>
+                    {!sidebarCollapsed ? (
+                      <>
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                          <MessageSquare size={12} className="text-navy-400 flex-shrink-0" />
+                          <p className={cn(
+                            "font-body text-xs truncate",
+                            conversationId === conv.id
+                              ? "text-accent-blue"
+                              : "text-navy-600 dark:text-cream-300"
+                          )}>
+                            {conv.title}
+                          </p>
+                        </div>
+                        <button
+                          onClick={(e) => deleteConversation(conv.id, e)}
+                          className="opacity-0 group-hover:opacity-100 w-5 h-5 rounded flex items-center justify-center text-navy-400 hover:text-red-500 transition-all flex-shrink-0 ml-1">
+                          <X size={11} />
+                        </button>
+                      </>
+                    ) : (
+                      <MessageSquare size={13} className={conversationId === conv.id ? "text-accent-blue" : "text-navy-400"} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Quick actions */}
           <div className="p-3">
@@ -586,7 +719,7 @@ return (
                   </div>
                   {[
                     { label: "Weekly digest emails", desc: "Get a summary of your workspace activity every Monday" },
-                    { label: "AI insight alerts",    desc: "Get notified when Sypora detects something important"   },
+                    { label: "AI insight alerts",    desc: "Get notified when Sypora detects something important"  },
                     { label: "Meeting summaries",    desc: "Receive email summaries after every meeting"           },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-navy-100 dark:border-navy-700 bg-navy-50/50 dark:bg-navy-800/30">
@@ -661,8 +794,6 @@ return (
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
-
-              {/* Connected */}
               {connectedTools.length > 0 && (
                 <>
                   <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider px-2 mb-2">Connected</p>
@@ -688,8 +819,6 @@ return (
                   ))}
                 </>
               )}
-
-              {/* Available */}
               <p className="font-mono text-xs text-navy-400 dark:text-cream-500 uppercase tracking-wider px-2 mt-4 mb-2">Available</p>
               {integrations.filter(i => !i.connected).map(integration => (
                 <div key={integration.name} className="flex items-center justify-between p-3 rounded-xl border border-navy-100 dark:border-navy-700 hover:border-navy-200 dark:hover:border-navy-600 transition-colors">
