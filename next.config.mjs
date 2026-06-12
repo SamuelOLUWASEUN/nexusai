@@ -8,6 +8,18 @@ const nextConfig = {
       { protocol: "https", hostname: "**.supabase.co"      },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
 };
-
 export default nextConfig;
