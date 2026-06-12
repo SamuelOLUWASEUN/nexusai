@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+export const dynamic = "force-dynamic";
+
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "alabims10@gmail.com";
 
 export async function GET(request: Request) {
