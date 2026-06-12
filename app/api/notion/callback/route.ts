@@ -3,10 +3,15 @@ import { createClient } from "@/supabase/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const code   = searchParams.get("code");
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const code  = searchParams.get("code");
+  const state = searchParams.get("state");
 
-  if (!code) return NextResponse.redirect(appUrl + "/dashboard?error=notion_auth_failed");
+  // Use the actual origin from the request
+  const origin = new URL(request.url).origin;
+
+  if (!code) {
+    return NextResponse.redirect(origin + "/dashboard?error=notion_auth_failed");
+  }
 
   try {
     const credentials = Buffer.from(
@@ -22,21 +27,29 @@ export async function GET(request: Request) {
       body: JSON.stringify({
         grant_type:   "authorization_code",
         code,
-        redirect_uri: appUrl + "/api/notion/callback",
+        redirect_uri: origin + "/api/notion/callback",
       }),
     });
 
     const tokenData = await tokenRes.json();
+
     if (!tokenRes.ok || !tokenData.access_token) {
-      return NextResponse.redirect(appUrl + "/dashboard?error=notion_token_failed");
+      console.error("Notion token error:", tokenData);
+      return NextResponse.redirect(origin + "/dashboard?error=notion_token_failed");
     }
 
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return NextResponse.redirect(appUrl + "/login");
+
+    // Use state (user_id) as fallback if session not available
+    const userId = user?.id || state;
+
+    if (!userId) {
+      return NextResponse.redirect(origin + "/login");
+    }
 
     await supabase.from("user_integrations").upsert({
-      user_id:        user.id,
+      user_id:        userId,
       tool_slug:      "notion",
       connected:      true,
       access_token:   tokenData.access_token,
@@ -44,11 +57,15 @@ export async function GET(request: Request) {
       workspace_name: tokenData.workspace_name,
     }, { onConflict: "user_id,tool_slug" });
 
-    fetch(appUrl + "/api/notion/index", { method: "POST" }).catch(console.error);
-    return NextResponse.redirect(appUrl + "/dashboard?connected=notion");
+    // Trigger indexing in background
+    fetch(origin + "/api/notion/index", {
+      method: "POST",
+    }).catch(console.error);
+
+    return NextResponse.redirect(origin + "/dashboard?connected=notion");
 
   } catch (error) {
     console.error("Notion OAuth error:", error);
-    return NextResponse.redirect(appUrl + "/dashboard?error=notion_failed");
+    return NextResponse.redirect(origin + "/dashboard?error=notion_failed");
   }
 }
