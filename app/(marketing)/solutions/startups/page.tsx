@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, Zap, Users, Clock, TrendingUp } from "lucide-react";
 
-export const metadata: Metadata = { title: "Nexus AI for Startups" };
+export const metadata: Metadata = { title: "Sypora AI for Startups" };
 
 const painPoints = [
-  { icon: Clock,      title: "Hours lost to context switching",       desc: "Your team switches between 6+ tools daily. Every switch costs focus time. Nexus makes one query search all of them." },
-  { icon: Users,      title: "New hires take weeks to ramp up",       desc: "Without a single source of truth, onboarding means interrupting senior engineers. Nexus gives new hires answers instantly." },
-  { icon: TrendingUp, title: "Decisions made without full context",   desc: "Important decisions get made before someone finds the relevant Slack thread from 3 months ago. Nexus surfaces it first." },
-  { icon: Zap,        title: "Founders drowning in admin writing",    desc: "Investor updates, all-hands recaps, customer emails — Nexus drafts them all using your real company data." },
+  { icon: Clock,      title: "Hours lost to context switching",       desc: "Your team switches between 6+ tools daily. Every switch costs focus time. Sypora makes one query search all of them." },
+  { icon: Users,      title: "New hires take weeks to ramp up",       desc: "Without a single source of truth, onboarding means interrupting senior engineers. Sypora gives new hires answers instantly." },
+  { icon: TrendingUp, title: "Decisions made without full context",   desc: "Important decisions get made before someone finds the relevant Slack thread from 3 months ago. Sypora surfaces it first." },
+  { icon: Zap,        title: "Founders drowning in admin writing",    desc: "Investor updates, all-hands recaps, customer emails — Sypora drafts them all using your real company data." },
 ];
 
 const results = [
@@ -20,7 +20,7 @@ const results = [
 
 const workflow = [
   { step: "01", title: "Connect in 4 minutes",   desc: "Link Slack, Notion, GitHub and your other tools with one-click OAuth. No engineering work, no IT tickets." },
-  { step: "02", title: "Ask your first question", desc: "Type naturally — 'What did we decide about the pricing change last month?' Nexus finds the answer across all your tools." },
+  { step: "02", title: "Ask your first question", desc: "Type naturally — 'What did we decide about the pricing change last month?' Sypora finds the answer across all your tools." },
   { step: "03", title: "Share with your team",   desc: "Invite teammates, set permissions and watch your entire team start saving hours every day." },
 ];
 
@@ -36,7 +36,7 @@ export default function StartupsPage() {
           <span className="italic text-accent-blue">losing context.</span>
         </h1>
         <p className="section-sub mx-auto text-center mb-10">
-          Small teams can't afford to waste hours searching for information. Nexus connects your tools and makes your entire company's knowledge instantly searchable — so your team can stay focused on building.
+          Small teams can't afford to waste hours searching for information. Sypora connects your tools and makes your entire company's knowledge instantly searchable — so your team can stay focused on building.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link href="/signup" className="btn-primary text-base px-8 py-3.5">
@@ -64,7 +64,7 @@ export default function StartupsPage() {
       <div className="max-w-6xl mx-auto px-4 mb-20">
         <div className="text-center mb-12">
           <h2 className="section-title">The problems every startup knows.</h2>
-          <p className="section-sub mx-auto text-center">Nexus solves the knowledge problems that slow every growing team down.</p>
+          <p className="section-sub mx-auto text-center">Sypora solves the knowledge problems that slow every growing team down.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {painPoints.map((point, i) => (

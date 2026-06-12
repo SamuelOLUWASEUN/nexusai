@@ -43,7 +43,7 @@ export function Footer() {
                   <path d="M9 2V16M2.5 6L15.5 12M15.5 6L2.5 12" stroke="white" strokeWidth="1" opacity="0.5"/>
                 </svg>
               </div>
-              <span className="font-display font-semibold text-xl text-white">Nexus <span className="text-accent-blue">AI</span></span>
+              <span className="font-display font-semibold text-xl text-white">Sypora <span className="text-accent-blue">AI</span></span>
             </div>
             <p className="font-body text-sm text-cream-400 leading-relaxed max-w-56 mb-6">
               The AI workspace hub that knows your entire company — so your team can move faster.
@@ -82,7 +82,7 @@ export function Footer() {
 
         {/* Bottom */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-body text-xs text-cream-500">© 2026 Nexus AI, Inc. All rights reserved.</p>
+          <p className="font-body text-xs text-cream-500">© 2026 Sypora AI, Inc. All rights reserved.</p>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             <span className="font-mono text-xs text-cream-500">All systems operational</span>

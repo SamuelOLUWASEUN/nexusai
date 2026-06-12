@@ -9,26 +9,26 @@ const useCases = [
     icon: Rocket,
     label: "Startups",
     headline: "Move fast without losing context.",
-    subheadline: "Small teams wear many hats. Nexus makes sure nothing falls through the cracks.",
+    subheadline: "Small teams wear many hats. Sypora makes sure nothing falls through the cracks.",
     color: "text-accent-blue",
     activeBg: "bg-accent-blue",
     scenarios: [
       {
         title: "New hire ramp-up",
         before: "New engineer asks 12 different people 'where is the onboarding doc?' over 3 days",
-        after: "Nexus answers instantly with a summary pulled from Notion, Confluence and Slack history",
+        after: "Sypora answers instantly with a summary pulled from Notion, Confluence and Slack history",
         saving: "3 days → 30 minutes",
       },
       {
         title: "Weekly investor update",
         before: "Founder spends 3 hours pulling metrics from Stripe, Linear, HubSpot and writing the update",
-        after: "Nexus pulls all data and drafts the full update in 90 seconds — just review and send",
+        after: "Sypora pulls all data and drafts the full update in 90 seconds — just review and send",
         saving: "3 hours → 5 minutes",
       },
       {
         title: "Customer support context",
         before: "Support rep searches 4 tools to understand what the customer previously complained about",
-        after: "Nexus surfaces full customer history from Intercom, HubSpot and email in one click",
+        after: "Sypora surfaces full customer history from Intercom, HubSpot and email in one click",
         saving: "8 min/ticket → 45 seconds",
       },
     ],
@@ -46,19 +46,19 @@ const useCases = [
       {
         title: "Cross-team knowledge search",
         before: "Sales asks engineering what the product roadmap says about a feature — email chain takes 2 days",
-        after: "Any employee asks Nexus and gets a real-time, permission-aware answer from relevant docs",
+        after: "Any employee asks Sypora and gets a real-time, permission-aware answer from relevant docs",
         saving: "2 days → instant",
       },
       {
         title: "Executive reporting",
         before: "4 VPs spend Friday afternoon assembling data from 8 systems into a board deck",
-        after: "Nexus generates a fully sourced executive brief with charts and summaries automatically",
+        after: "Sypora generates a fully sourced executive brief with charts and summaries automatically",
         saving: "4 people × 4h → 10 minutes",
       },
       {
         title: "Compliance & audit prep",
         before: "Legal team manually searches through years of Slack, email and docs for an audit",
-        after: "Nexus retrieves all relevant communications instantly with full audit trail and access logs",
+        after: "Sypora retrieves all relevant communications instantly with full audit trail and access logs",
         saving: "Weeks of work → hours",
       },
     ],
@@ -76,19 +76,19 @@ const useCases = [
       {
         title: "Incident response",
         before: "On-call engineer spends 40 minutes reading through Slack threads and runbooks during an outage",
-        after: "Nexus surfaces past incidents, relevant runbooks and Slack context in one organized view",
+        after: "Sypora surfaces past incidents, relevant runbooks and Slack context in one organized view",
         saving: "40 min → 5 min to context",
       },
       {
         title: "Code review context",
         before: "Reviewer doesn't know why a decision was made 6 months ago and leaves a blocking comment",
-        after: "Nexus links the PR to the original Slack discussion, Linear ticket and Notion spec automatically",
+        after: "Sypora links the PR to the original Slack discussion, Linear ticket and Notion spec automatically",
         saving: "Eliminates 60% of blocking review comments",
       },
       {
         title: "Sprint retrospectives",
         before: "PM manually reads all Linear tickets and Slack threads to prepare the retro doc",
-        after: "Nexus generates a full sprint summary with velocity, blockers and highlights in 30 seconds",
+        after: "Sypora generates a full sprint summary with velocity, blockers and highlights in 30 seconds",
         saving: "2h prep → 30 seconds",
       },
     ],
@@ -107,7 +107,7 @@ export function UseCases() {
           <div className="section-tag mx-auto">Use cases</div>
           <h2 className="section-title">Built for every team,<br />tailored to your reality.</h2>
           <p className="section-sub mx-auto text-center">
-            Whether you're a 5-person startup or a 5,000-person enterprise, Nexus adapts to how your team actually works.
+            Whether you're a 5-person startup or a 5,000-person enterprise, Sypora adapts to how your team actually works.
           </p>
         </div>
 
@@ -170,7 +170,7 @@ export function UseCases() {
                     <p className="font-body text-sm text-navy-600 dark:text-cream-400 leading-relaxed">{scenario.before}</p>
                   </div>
                   <div className="p-3 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-100 dark:border-green-900/30">
-                    <p className="font-mono text-xs text-green-600 dark:text-green-400 font-medium mb-1.5 uppercase tracking-wider">With Nexus</p>
+                    <p className="font-mono text-xs text-green-600 dark:text-green-400 font-medium mb-1.5 uppercase tracking-wider">With Sypora</p>
                     <p className="font-body text-sm text-navy-600 dark:text-cream-400 leading-relaxed">{scenario.after}</p>
                   </div>
                 </div>

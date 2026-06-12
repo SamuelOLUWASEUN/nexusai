@@ -41,8 +41,8 @@ const posts = [
   {
     slug:     "startup-onboarding-nexus",
     category: "Case Study",
-    title:    "How Flowbase cut onboarding from 3 weeks to 4 days with Nexus AI",
-    excerpt:  "Flowbase's CTO explains exactly how they used Nexus to build a self-serve onboarding system that new hires love — and managers barely have to touch.",
+    title:    "How Flowbase cut onboarding from 3 weeks to 4 days with Sypora AI",
+    excerpt:  "Flowbase's CTO explains exactly how they used Sypora to build a self-serve onboarding system that new hires love — and managers barely have to touch.",
     author:   "Amara Levi",
     role:     "Guest Author",
     date:     "May 12, 2026",
@@ -52,7 +52,7 @@ const posts = [
   {
     slug:     "series-a",
     category: "Company",
-    title:    "Nexus AI raises $12M Series A to bring workplace AI to every team",
+    title:    "Sypora AI raises $12M Series A to bring workplace AI to every team",
     excerpt:  "Today we're announcing our $12M Series A, led by Index Ventures with participation from Sequoia and angels including the founders of Notion and Linear.",
     author:   "David Chen",
     role:     "CEO",
@@ -93,7 +93,7 @@ export default function BlogPage() {
         <div className="mb-14">
           <div className="section-tag">Blog</div>
           <h1 className="section-title">Insights on AI, productivity<br />and the future of work.</h1>
-          <p className="section-sub">Research, product updates, case studies and engineering deep dives from the Nexus AI team.</p>
+          <p className="section-sub">Research, product updates, case studies and engineering deep dives from the Sypora AI team.</p>
         </div>
 
         {/* Featured post */}

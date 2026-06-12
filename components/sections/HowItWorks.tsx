@@ -14,7 +14,7 @@ const steps = [
     number: "02",
     icon: MessageSquare,
     title: "Ask in plain English",
-    description: "Type naturally like you're messaging a colleague. No query syntax, no boolean operators, no filters. Nexus understands context, intent and follow-up questions.",
+    description: "Type naturally like you're messaging a colleague. No query syntax, no boolean operators, no filters. Sypora understands context, intent and follow-up questions.",
     detail: "Works in 40+ languages",
     color: "bg-indigo-50 dark:bg-indigo-950/30 border-indigo-100 dark:border-indigo-900",
     iconColor: "text-accent-indigo bg-indigo-100 dark:bg-indigo-900/50",
@@ -23,7 +23,7 @@ const steps = [
     number: "03",
     icon: Zap,
     title: "Get results and take action",
-    description: "Receive cited answers, generated drafts, meeting summaries or triggered automations — all in under a second. Nexus shows its sources so you always know where information came from.",
+    description: "Receive cited answers, generated drafts, meeting summaries or triggered automations — all in under a second. Sypora shows its sources so you always know where information came from.",
     detail: "Average response: 0.8 seconds",
     color: "bg-teal-50 dark:bg-teal-950/30 border-teal-100 dark:border-teal-900",
     iconColor: "text-accent-teal bg-teal-100 dark:bg-teal-900/50",
@@ -38,7 +38,7 @@ export function HowItWorks() {
           <div className="section-tag mx-auto">How it works</div>
           <h2 className="section-title">Up and running in minutes.<br />Transformative from day one.</h2>
           <p className="section-sub mx-auto text-center">
-            No long onboarding. No complex setup. Connect your tools, ask your first question and instantly see why thousands of teams use Nexus every day.
+            No long onboarding. No complex setup. Connect your tools, ask your first question and instantly see why thousands of teams use Sypora every day.
           </p>
         </div>
 

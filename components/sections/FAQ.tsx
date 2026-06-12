@@ -5,31 +5,31 @@ import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "How does Nexus AI actually work?",
-    answer: "Nexus connects to your tools via secure OAuth and indexes your data continuously. When you ask a question, our AI searches across all connected sources simultaneously, synthesizes the most relevant information, and returns a cited answer in under a second. All processing respects your existing tool permissions — users only see data they already have access to.",
+    question: "How does Sypora AI actually work?",
+    answer: "Sypora connects to your tools via secure OAuth and indexes your data continuously. When you ask a question, our AI searches across all connected sources simultaneously, synthesizes the most relevant information, and returns a cited answer in under a second. All processing respects your existing tool permissions — users only see data they already have access to.",
   },
   {
     question: "Is my company's data safe?",
-    answer: "Absolutely. Nexus is SOC 2 Type II certified and ISO 27001 compliant. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). We never use your company's data to train our models. Enterprise customers can choose private cloud or on-premise deployment for complete data sovereignty. Full audit logs are available for all queries.",
+    answer: "Absolutely. Sypora is SOC 2 Type II certified and ISO 27001 compliant. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). We never use your company's data to train our models. Enterprise customers can choose private cloud or on-premise deployment for complete data sovereignty. Full audit logs are available for all queries.",
   },
   {
     question: "How long does setup take?",
-    answer: "Most teams are fully set up in under 10 minutes. Connect your first integration in 60 seconds via OAuth — no API keys, no engineering work required. Nexus begins indexing immediately and typically has your first workspace ready to query within 4 minutes. Our onboarding team is available to help for Pro and Enterprise customers.",
+    answer: "Most teams are fully set up in under 10 minutes. Connect your first integration in 60 seconds via OAuth — no API keys, no engineering work required. Sypora begins indexing immediately and typically has your first workspace ready to query within 4 minutes. Our onboarding team is available to help for Pro and Enterprise customers.",
   },
   {
-    question: "Does Nexus work with our existing permissions?",
-    answer: "Yes — this is one of Nexus's most important features. When a user asks a question, Nexus only searches data that user already has permission to access in the source tool. If someone can't see a private Slack channel, they won't see its contents in Nexus answers. Permissions are checked in real time, not cached.",
+    question: "Does Sypora work with our existing permissions?",
+    answer: "Yes — this is one of Sypora's most important features. When a user asks a question, Sypora only searches data that user already has permission to access in the source tool. If someone can't see a private Slack channel, they won't see its contents in Sypora answers. Permissions are checked in real time, not cached.",
   },
   {
     question: "What happens to my data if I cancel?",
     answer: "If you cancel your subscription, we give you 30 days to export all your data. After that period, all your data is permanently deleted from our systems within 7 business days. We'll send you a deletion confirmation when complete. You own your data — always.",
   },
   {
-    question: "Can I try Nexus before paying?",
+    question: "Can I try Sypora before paying?",
     answer: "Yes. The Starter plan is completely free forever with no credit card required. Pro includes a 14-day free trial with full access to all features. Enterprise customers can request a custom proof-of-concept engagement. We're confident you'll see measurable value within your first week.",
   },
   {
-    question: "Does Nexus support on-premise deployment?",
+    question: "Does Sypora support on-premise deployment?",
     answer: "Yes — on-premise deployment is available on our Enterprise plan. We provide a Docker-based deployment package, full installation support, and ongoing maintenance updates. On-premise customers get the same feature set as cloud customers, with complete control over where their data lives.",
   },
   {

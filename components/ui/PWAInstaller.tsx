@@ -64,7 +64,7 @@ export function PWAInstaller() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-body font-semibold text-navy-900 dark:text-cream-100 text-sm">
-              Install Nexus AI
+              Install Sypora AI
             </p>
             <p className="font-body text-xs text-navy-500 dark:text-cream-400 mt-0.5 leading-relaxed">
               Add to your home screen for instant access — works offline too.

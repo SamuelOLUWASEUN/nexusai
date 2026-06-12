@@ -97,11 +97,11 @@ export function Waitlist() {
               <div className="mt-6 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900">
                 <p className="font-body text-sm text-navy-600 dark:text-cream-300">
                   <strong className="text-navy-900 dark:text-cream-100">Move up the list faster:</strong>{" "}
-                  Share Nexus AI with your network. For every 3 people you refer who join the waitlist, we'll bump you to the front of the queue.
+                  Share Sypora AI with your network. For every 3 people you refer who join the waitlist, we'll bump you to the front of the queue.
                 </p>
                 <button
                   onClick={() => {
-                    navigator.clipboard?.writeText(`https://nexusai.com/?ref=${email}`);
+                    navigator.clipboard?.writeText(`https://sypora-ai.com/?ref=${email}`);
                     alert("Referral link copied to clipboard!");
                   }}
                   className="mt-3 btn-secondary text-sm py-2 px-4"

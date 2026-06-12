@@ -70,7 +70,7 @@ export function Hero() {
         <div className="flex justify-center mb-8">
           <Link href="/blog/series-a" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-navy-800 border border-navy-100 dark:border-navy-700 shadow-card hover:shadow-card-hover transition-all">
             <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-accent-blue text-white font-mono text-xs font-bold">NEW</span>
-            <span className="font-body text-sm text-navy-600 dark:text-cream-300">Nexus AI raises $12M Series A to scale enterprise AI</span>
+            <span className="font-body text-sm text-navy-600 dark:text-cream-300">Sypora AI raises $12M Series A to scale enterprise AI</span>
             <ChevronRight size={14} className="text-navy-400 group-hover:text-accent-blue group-hover:translate-x-0.5 transition-all" />
           </Link>
         </div>
@@ -181,7 +181,7 @@ export function Hero() {
             {/* Input bar */}
             <div className="px-4 pb-4">
               <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-navy-200 dark:border-navy-600 bg-navy-50 dark:bg-navy-900">
-                <span className="font-body text-sm text-navy-300 dark:text-navy-500 flex-1">Ask Nexus anything about your company...</span>
+                <span className="font-body text-sm text-navy-300 dark:text-navy-500 flex-1">Ask Sypora anything about your company...</span>
                 <div className="flex items-center gap-2">
                   <kbd className="px-1.5 py-0.5 rounded text-xs font-mono text-navy-400 bg-white dark:bg-navy-800 border border-navy-200 dark:border-navy-700">⌘K</kbd>
                   <div className="w-7 h-7 rounded-lg bg-navy-900 dark:bg-accent-blue flex items-center justify-center">

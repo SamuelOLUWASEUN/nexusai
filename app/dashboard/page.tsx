@@ -222,7 +222,7 @@ return (
                 </svg>
               </div>
               <span className="font-display font-semibold text-base text-navy-900 dark:text-cream-50">
-                Nexus <span className="text-accent-blue">AI</span>
+                Sypora <span className="text-accent-blue">AI</span>
               </span>
             </button>
           )}
@@ -360,7 +360,7 @@ return (
             <div className="flex items-center gap-2">
               <Sparkles size={16} className="text-accent-blue flex-shrink-0" />
               <div>
-                <p className="font-body font-semibold text-navy-900 dark:text-cream-100 text-sm">Nexus AI Workspace</p>
+                <p className="font-body font-semibold text-navy-900 dark:text-cream-100 text-sm">Sypora AI Workspace</p>
                 <p className="font-mono text-xs text-navy-400 dark:text-cream-500 hidden sm:block">
                   Searching across {connectedTools.length} connected tools
                 </p>
@@ -465,7 +465,7 @@ return (
           <div className="max-w-3xl mx-auto">
             <div className="flex items-end gap-2 bg-navy-50 dark:bg-navy-800 border border-navy-200 dark:border-navy-600 rounded-2xl px-3 py-2.5 focus-within:border-accent-blue focus-within:ring-2 focus-within:ring-accent-blue/20 transition-all">
               <textarea ref={inputRef} value={input} onChange={e => setInput(e.target.value)} onKeyDown={handleKeyDown}
-                placeholder="Ask Nexus anything..." rows={1}
+                placeholder="Ask Sypora anything..." rows={1}
                 className="flex-1 bg-transparent font-body text-sm text-navy-900 dark:text-cream-100 placeholder-navy-300 dark:placeholder-navy-500 outline-none leading-relaxed resize-none"
                 style={{ minHeight: "24px", maxHeight: "120px" }}
                 onInput={e => { const t = e.target as HTMLTextAreaElement; t.style.height = "auto"; t.style.height = Math.min(t.scrollHeight, 120) + "px"; }}
@@ -586,7 +586,7 @@ return (
                   </div>
                   {[
                     { label: "Weekly digest emails", desc: "Get a summary of your workspace activity every Monday" },
-                    { label: "AI insight alerts",    desc: "Get notified when Nexus detects something important"   },
+                    { label: "AI insight alerts",    desc: "Get notified when Sypora detects something important"   },
                     { label: "Meeting summaries",    desc: "Receive email summaries after every meeting"           },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-navy-100 dark:border-navy-700 bg-navy-50/50 dark:bg-navy-800/30">

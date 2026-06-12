@@ -26,7 +26,7 @@ export function CTA() {
             </h2>
 
             <p className="font-body text-lg text-cream-400 leading-relaxed mb-10 max-w-xl mx-auto">
-              Every day your team spends searching for information, writing status updates and sitting in alignment meetings is a day Nexus could give back. Start today — results in your first week, guaranteed.
+              Every day your team spends searching for information, writing status updates and sitting in alignment meetings is a day Sypora could give back. Start today — results in your first week, guaranteed.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">

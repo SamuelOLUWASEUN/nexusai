@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Code2, GitBranch, AlertTriangle, BookOpen, Check } from "lucide-react";
 
-export const metadata: Metadata = { title: "Nexus AI for Engineering" };
+export const metadata: Metadata = { title: "Sypora AI for Engineering" };
 
 const engineeringFeatures = [
   {
     icon: AlertTriangle,
     title: "Faster incident response",
-    desc: "When something breaks at 2am, Nexus surfaces past incidents, relevant runbooks and related Slack threads instantly. Get to context in seconds, not 40 minutes.",
+    desc: "When something breaks at 2am, Sypora surfaces past incidents, relevant runbooks and related Slack threads instantly. Get to context in seconds, not 40 minutes.",
     stat: "40% faster resolution",
   },
   {
@@ -20,13 +20,13 @@ const engineeringFeatures = [
   {
     icon: BookOpen,
     title: "Living documentation",
-    desc: "Ask Nexus where the architecture diagram is, what the deployment process for service X is, or why a particular technical decision was made. No more 'ask Alice'.",
+    desc: "Ask Sypora where the architecture diagram is, what the deployment process for service X is, or why a particular technical decision was made. No more 'ask Alice'.",
     stat: "90% of doc searches answered",
   },
   {
     icon: Code2,
     title: "Sprint retrospectives in 30s",
-    desc: "Nexus generates full sprint summaries with velocity data, blockers, highlights and action items automatically — from your Linear, GitHub and Slack data.",
+    desc: "Sypora generates full sprint summaries with velocity data, blockers, highlights and action items automatically — from your Linear, GitHub and Slack data.",
     stat: "2h prep → 30 seconds",
   },
 ];
@@ -103,7 +103,7 @@ export default function EngineeringPage() {
             ))}
           </div>
           <blockquote className="font-body text-lg text-navy-700 dark:text-cream-200 leading-relaxed mb-6 italic">
-            "We had an incident at 3am. Engineer on call found the root cause and relevant runbook in 4 minutes using Nexus. Previously that would have taken 45 minutes of Slack searching and waking people up."
+            "We had an incident at 3am. Engineer on call found the root cause and relevant runbook in 4 minutes using Sypora. Previously that would have taken 45 minutes of Slack searching and waking people up."
           </blockquote>
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center text-white font-bold text-sm">AL</div>

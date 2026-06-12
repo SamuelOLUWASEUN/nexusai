@@ -48,7 +48,7 @@ const navLinks = [
   {
     label: "Product",
     children: [
-      { href: "/features",     label: "Features",     desc: "Everything Nexus can do"      },
+      { href: "/features",     label: "Features",     desc: "Everything Sypora can do"      },
       { href: "/integrations", label: "Integrations", desc: "100+ tool connections"        },
       { href: "/security",     label: "Security",     desc: "Enterprise-grade protection"  },
     ],
@@ -99,7 +99,7 @@ export function Navbar() {
             </svg>
           </div>
           <span className="font-display font-semibold text-xl text-navy-900 dark:text-cream-50 tracking-tight">
-            Nexus <span className="text-accent-blue">AI</span>
+            Sypora <span className="text-accent-blue">AI</span>
           </span>
         </Link>
 

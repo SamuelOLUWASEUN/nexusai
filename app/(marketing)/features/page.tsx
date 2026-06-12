@@ -12,7 +12,7 @@ const featureGroups = [
     items: [
       { title: "Cross-tool semantic search",  desc: "Search across Slack, Notion, Drive, GitHub, Jira and 100+ more simultaneously with a single query." },
       { title: "Source citations",            desc: "Every answer links back to the original source so your team can verify and dig deeper." },
-      { title: "Context-aware answers",       desc: "Nexus understands follow-up questions and maintains conversation context like a real colleague." },
+      { title: "Context-aware answers",       desc: "Sypora understands follow-up questions and maintains conversation context like a real colleague." },
       { title: "Permission-aware results",    desc: "Users only see results from tools they already have access to — automatically enforced." },
       { title: "Real-time indexing",          desc: "Data indexed continuously. Ask about a Slack message posted 5 minutes ago." },
       { title: "People search",              desc: "Find anything related to a specific colleague — their projects, decisions, documents." },
@@ -28,7 +28,7 @@ const featureGroups = [
       { title: "Smart summaries",             desc: "Structured meeting summaries with decisions, next steps and key discussion points." },
       { title: "Speaker identification",      desc: "Knows who said what — searchable by speaker name across your entire meeting history." },
       { title: "Meeting search",              desc: "Search across all your past meetings. Find any decision made in any call." },
-      { title: "Follow-up automation",        desc: "Nexus drafts follow-up emails and Slack messages after meetings automatically." },
+      { title: "Follow-up automation",        desc: "Sypora drafts follow-up emails and Slack messages after meetings automatically." },
     ],
   },
   {
@@ -54,7 +54,7 @@ const featureGroups = [
       { title: "Team health scoring",         desc: "Measures team sentiment, velocity and collaboration from tool usage patterns." },
       { title: "Custom dashboards",           desc: "Build custom insight dashboards with drag-and-drop simplicity." },
       { title: "Proactive alerts",            desc: "Get notified when something unusual happens — a spike in support tickets, a stalled project." },
-      { title: "ROI reporting",               desc: "See exactly how much time Nexus is saving your team every week." },
+      { title: "ROI reporting",               desc: "See exactly how much time Sypora is saving your team every week." },
     ],
   },
   {
@@ -77,10 +77,10 @@ const featureGroups = [
     items: [
       { title: "100+ native integrations",    desc: "One-click OAuth connections with the most popular business tools." },
       { title: "REST API",                    desc: "Build custom integrations and automate workflows with our full-featured API." },
-      { title: "Webhook support",             desc: "Push Nexus answers and insights to any system via webhooks." },
-      { title: "Browser extension",           desc: "Access Nexus in any tab — search without leaving your current workflow." },
+      { title: "Webhook support",             desc: "Push Sypora answers and insights to any system via webhooks." },
+      { title: "Browser extension",           desc: "Access Sypora in any tab — search without leaving your current workflow." },
       { title: "Mobile app",                  desc: "iOS and Android apps for on-the-go access to your workspace intelligence." },
-      { title: "Slack & Teams bots",          desc: "Ask Nexus directly in Slack or Teams without opening a new tab." },
+      { title: "Slack & Teams bots",          desc: "Ask Sypora directly in Slack or Teams without opening a new tab." },
     ],
   },
 ];
@@ -93,7 +93,7 @@ export default function FeaturesPage() {
         <div className="section-tag mx-auto">All Features</div>
         <h1 className="section-title">Everything your team needs.<br />In one AI workspace.</h1>
         <p className="section-sub mx-auto text-center mb-8">
-          Nexus isn't a single-purpose AI tool. It's the complete intelligence layer for your organization — search, meetings, writing, insights and security, all in one place.
+          Sypora isn't a single-purpose AI tool. It's the complete intelligence layer for your organization — search, meetings, writing, insights and security, all in one place.
         </p>
         <Link href="/signup" className="btn-primary">
           Start for free <ArrowRight size={16} />

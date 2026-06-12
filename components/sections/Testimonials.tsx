@@ -1,6 +1,6 @@
 const testimonials = [
   {
-    quote: "Nexus replaced four internal tools we were paying for. Our engineering team's ramp-up time dropped from 3 weeks to 4 days. It's not an exaggeration — it literally changed how we operate.",
+    quote: "Sypora replaced four internal tools we were paying for. Our engineering team's ramp-up time dropped from 3 weeks to 4 days. It's not an exaggeration — it literally changed how we operate.",
     author: "Sarah Kim",
     role: "CTO",
     company: "Flowbase",
@@ -9,7 +9,7 @@ const testimonials = [
     metric: "3 weeks → 4 days onboarding",
   },
   {
-    quote: "Every executive was spending 3-4 hours on Fridays assembling board reports. Now Nexus does it in 10 minutes. That's 16 hours of senior leadership time saved every single week.",
+    quote: "Every executive was spending 3-4 hours on Fridays assembling board reports. Now Sypora does it in 10 minutes. That's 16 hours of senior leadership time saved every single week.",
     author: "Marcus Reid",
     role: "VP of Operations",
     company: "Archtype",
@@ -18,7 +18,7 @@ const testimonials = [
     metric: "16h saved per week",
   },
   {
-    quote: "We tried 6 other AI tools. None of them understood our specific workflows and permissions. Nexus was the first one our security team actually approved — and the first one people actually used.",
+    quote: "We tried 6 other AI tools. None of them understood our specific workflows and permissions. Sypora was the first one our security team actually approved — and the first one people actually used.",
     author: "Amara Levi",
     role: "Head of Engineering",
     company: "Pulsar",
@@ -27,7 +27,7 @@ const testimonials = [
     metric: "100% security team approval",
   },
   {
-    quote: "Our customer support resolution time dropped 40% in the first month. Agents no longer switch between 5 tools — they just ask Nexus and get everything in one place.",
+    quote: "Our customer support resolution time dropped 40% in the first month. Agents no longer switch between 5 tools — they just ask Sypora and get everything in one place.",
     author: "James Okafor",
     role: "Director of Support",
     company: "Terrapin",
@@ -36,7 +36,7 @@ const testimonials = [
     metric: "40% faster resolution",
   },
   {
-    quote: "I was skeptical about another AI tool. But Nexus actually reads our Slack, understands our jargon, and gives answers that feel like they came from someone who's been at the company for years.",
+    quote: "I was skeptical about another AI tool. But Sypora actually reads our Slack, understands our jargon, and gives answers that feel like they came from someone who's been at the company for years.",
     author: "Nina Walsh",
     role: "Product Lead",
     company: "Creativelab",
@@ -45,7 +45,7 @@ const testimonials = [
     metric: "4.9★ team rating",
   },
   {
-    quote: "The meeting summaries alone justified the cost. We had 120 meetings last month. Nexus summarized all of them, extracted every action item and sent them to the right people. Zero manual work.",
+    quote: "The meeting summaries alone justified the cost. We had 120 meetings last month. Sypora summarized all of them, extracted every action item and sent them to the right people. Zero manual work.",
     author: "David Chen",
     role: "CEO",
     company: "Meridian",
@@ -67,7 +67,7 @@ export function Testimonials() {
             Loved by teams<br />at every stage.
           </h2>
           <p className="font-body text-lg text-cream-400 max-w-xl mx-auto">
-            From 5-person startups to Fortune 500 enterprises — here's what teams say after their first month with Nexus.
+            From 5-person startups to Fortune 500 enterprises — here's what teams say after their first month with Sypora.
           </p>
         </div>
 
@@ -111,7 +111,7 @@ export function Testimonials() {
         {/* Bottom stat bar */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-white/10">
           {[
-            { num: "2,400+", label: "Teams using Nexus"          },
+            { num: "2,400+", label: "Teams using Sypora"          },
             { num: "4.9/5",  label: "Average rating"              },
             { num: "2.8h",   label: "Saved per employee per day"  },
             { num: "99.9%",  label: "Uptime SLA"                  },

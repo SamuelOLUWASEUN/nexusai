@@ -13,7 +13,7 @@ const features = [
   {
     icon: Video,
     title: "AI Meeting Assistant",
-    description: "Never take manual notes again. Nexus joins your Zoom, Google Meet or Teams calls, transcribes in real time, identifies action items, and sends a structured summary to everyone — automatically.",
+    description: "Never take manual notes again. Sypora joins your Zoom, Google Meet or Teams calls, transcribes in real time, identifies action items, and sends a structured summary to everyone — automatically.",
     bullets: ["Real-time transcription", "Auto-detected action items", "Speaker identification", "Searchable meeting archive"],
     color: "accent-indigo",
     bg: "bg-indigo-50 dark:bg-indigo-950/20",
@@ -31,7 +31,7 @@ const features = [
   {
     icon: BarChart3,
     title: "Predictive Insights",
-    description: "Nexus analyzes patterns across all your tools to surface risks, trends and opportunities before they become problems. Know what's slowing your team down before your team tells you.",
+    description: "Sypora analyzes patterns across all your tools to surface risks, trends and opportunities before they become problems. Know what's slowing your team down before your team tells you.",
     bullets: ["Weekly insight digests", "Bottleneck detection", "Team health scoring", "Custom alert thresholds"],
     color: "accent-amber",
     bg: "bg-amber-50 dark:bg-amber-950/20",
@@ -40,7 +40,7 @@ const features = [
   {
     icon: Globe,
     title: "100+ Integrations",
-    description: "Nexus connects to the tools your team already uses. One-click OAuth setup with Slack, Notion, Google Workspace, GitHub, Jira, Linear, HubSpot, Salesforce, Zoom and many more.",
+    description: "Sypora connects to the tools your team already uses. One-click OAuth setup with Slack, Notion, Google Workspace, GitHub, Jira, Linear, HubSpot, Salesforce, Zoom and many more.",
     bullets: ["One-click OAuth", "Bi-directional sync", "Webhook support", "Custom API connector"],
     color: "accent-blue",
     bg: "bg-blue-50 dark:bg-blue-950/20",
@@ -65,7 +65,7 @@ export function Features() {
           <div className="section-tag mx-auto">Core capabilities</div>
           <h2 className="section-title">One AI. Every capability<br />your team needs.</h2>
           <p className="section-sub mx-auto text-center">
-            Nexus isn't a point solution. It's the complete AI layer for your entire organization — search, writing, meetings and insights in one place.
+            Sypora isn't a point solution. It's the complete AI layer for your entire organization — search, writing, meetings and insights in one place.
           </p>
         </div>
 

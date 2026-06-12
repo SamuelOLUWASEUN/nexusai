@@ -37,13 +37,13 @@ function ContactForm() {
               Let's talk.
             </h1>
             <p className="font-body text-navy-500 dark:text-cream-400 leading-relaxed mb-8">
-              Whether you're evaluating Nexus for your team, have a question about our enterprise plan, or just want to say hello — we'd love to hear from you.
+              Whether you're evaluating Sypora for your team, have a question about our enterprise plan, or just want to say hello — we'd love to hear from you.
             </p>
 
             <div className="space-y-5">
               {[
-                { icon: Mail,           title: "Email us",          desc: "hello@nexusai.com",           sub: "We reply within 24 hours"        },
-                { icon: MessageSquare,  title: "Enterprise sales",   desc: "sales@nexusai.com",           sub: "Custom pricing and deployment"   },
+                { icon: Mail,           title: "Email us",          desc: "hello@sypora-ai.com",           sub: "We reply within 24 hours"        },
+                { icon: MessageSquare,  title: "Enterprise sales",   desc: "sales@sypora-ai.com",           sub: "Custom pricing and deployment"   },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-4 p-4 rounded-xl border border-navy-100 dark:border-navy-700 bg-navy-50/50 dark:bg-navy-800/30">
                   <div className="w-9 h-9 rounded-lg bg-white dark:bg-navy-800 border border-navy-100 dark:border-navy-700 flex items-center justify-center flex-shrink-0 shadow-card">

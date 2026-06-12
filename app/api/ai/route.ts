@@ -64,7 +64,7 @@ export async function POST(request: Request) {
     const tools       = context?.tools || [];
     const hasRealData = contextDocs.length > 0;
 
-    const systemPrompt = `You are Nexus AI, an intelligent workspace assistant that helps teams find information, summarize documents, analyze data and automate tasks.
+    const systemPrompt = `You are Sypora AI, an intelligent workspace assistant that helps teams find information, summarize documents, analyze data and automate tasks.
 
 ${hasRealData
   ? "You have access to REAL content from the user's connected tools. Use this content to give accurate, specific answers. Always cite which tool and document the information came from."

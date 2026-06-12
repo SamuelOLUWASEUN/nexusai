@@ -10,7 +10,7 @@ export default function OfflinePage() {
           You are offline
         </h1>
         <p className="font-body text-navy-500 dark:text-cream-400 text-sm max-w-xs leading-relaxed">
-          Nexus AI needs an internet connection to work. Please check your connection and try again.
+          Sypora AI needs an internet connection to work. Please check your connection and try again.
         </p>
       </div>
       <button

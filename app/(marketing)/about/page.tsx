@@ -16,7 +16,7 @@ const team = [
 const values = [
   { icon: "🎯", title: "Relentlessly useful",    desc: "Every feature we build must save real people real time. We measure success in hours returned to teams, not features shipped." },
   { icon: "🔒", title: "Security is not optional", desc: "Enterprise teams trust us with their most sensitive data. We treat that responsibility seriously — SOC 2, encryption, and privacy by default." },
-  { icon: "🧠", title: "Honest about AI",         desc: "We cite sources. We show confidence levels. We tell you when Nexus doesn't know something. AI should augment judgment, not replace it." },
+  { icon: "🧠", title: "Honest about AI",         desc: "We cite sources. We show confidence levels. We tell you when Sypora doesn't know something. AI should augment judgment, not replace it." },
   { icon: "🤝", title: "Customers are partners",  desc: "Our best features come from customer conversations. We ship fast, share roadmaps openly, and treat feedback as the most valuable input we receive." },
 ];
 
@@ -26,9 +26,9 @@ export default function AboutPage() {
       {/* Hero */}
       <div className="max-w-4xl mx-auto px-4 text-center py-20">
         <div className="section-tag mx-auto">Our story</div>
-        <h1 className="section-title">We built Nexus because<br />we lived the problem.</h1>
+        <h1 className="section-title">We built Sypora because<br />we lived the problem.</h1>
         <p className="section-sub mx-auto text-center">
-          Our founders spent years at fast-growing companies watching smart people waste hours searching for information that already existed somewhere in their tools. Nexus is the product we wished we'd had.
+          Our founders spent years at fast-growing companies watching smart people waste hours searching for information that already existed somewhere in their tools. Sypora is the product we wished we'd had.
         </p>
       </div>
 
@@ -40,7 +40,7 @@ export default function AboutPage() {
             Make every person at every company as informed and capable as their best colleague.
           </h2>
           <p className="font-body text-cream-400 leading-relaxed">
-            We believe the knowledge your organization has built is one of its greatest assets — and that today, most of it is locked away in tools that don't talk to each other. Nexus exists to change that.
+            We believe the knowledge your organization has built is one of its greatest assets — and that today, most of it is locked away in tools that don't talk to each other. Sypora exists to change that.
           </p>
         </div>
       </div>

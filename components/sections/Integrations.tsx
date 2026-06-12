@@ -35,13 +35,13 @@ export function Integrations() {
             <div className="section-tag">Integrations</div>
             <h2 className="section-title">Works with the tools<br />your team already uses.</h2>
             <p className="section-sub mb-8">
-              No migrations, no new workflows, no convincing your team to change how they work. Nexus slots into your existing stack in minutes and makes everything smarter.
+              No migrations, no new workflows, no convincing your team to change how they work. Sypora slots into your existing stack in minutes and makes everything smarter.
             </p>
             <div className="space-y-4 mb-8">
               {[
                 { icon: "⚡", title: "One-click setup",    desc: "OAuth connection in under 60 seconds. No API keys or engineering work needed." },
                 { icon: "🔄", title: "Real-time sync",     desc: "Data is indexed continuously. Ask about something posted 5 minutes ago." },
-                { icon: "🔒", title: "Permission aware",   desc: "Nexus respects your existing tool permissions. Users only see what they're allowed to see." },
+                { icon: "🔒", title: "Permission aware",   desc: "Sypora respects your existing tool permissions. Users only see what they're allowed to see." },
                 { icon: "🔌", title: "Custom connector",   desc: "Build your own integration with our REST API and webhook support. Full documentation included." },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-4 p-4 rounded-xl hover:bg-navy-50 dark:hover:bg-navy-800 transition-colors">

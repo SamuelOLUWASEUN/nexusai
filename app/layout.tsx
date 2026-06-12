@@ -14,10 +14,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title:       { default: "Nexus AI — Your Team's AI Workspace Hub", template: "%s | Nexus AI" },
+  title:       { default: "Sypora AI — Your Team's AI Workspace Hub", template: "%s | Sypora AI" },
   description: "Connect your tools. Ask anything. Get instant answers, automated summaries, and AI-powered insights.",
   manifest:    "/manifest.json",
-  appleWebApp: { capable: true, statusBarStyle: "default", title: "Nexus AI" },
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "Sypora AI" },
   icons: {
     icon:  [{ url: "/icons/icon-96.png", sizes: "96x96",   type: "image/png" }],
     apple: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],

@@ -66,7 +66,7 @@ function SignupForm() {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-2xl p-5">
             <p className="font-body text-sm text-cream-300 italic mb-3">
-              "We had Nexus connected and answering questions in 6 minutes. By end of day 1, three different teams were using it."
+              "We had Sypora connected and answering questions in 6 minutes. By end of day 1, three different teams were using it."
             </p>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center font-body font-bold text-xs text-white">SK</div>
@@ -88,7 +88,7 @@ function SignupForm() {
                 <path d="M9 2L15.5 6V12L9 16L2.5 12V6L9 2Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
               </svg>
             </div>
-            <span className="font-display font-semibold text-lg text-navy-900 dark:text-cream-50">Nexus <span className="text-accent-blue">AI</span></span>
+            <span className="font-display font-semibold text-lg text-navy-900 dark:text-cream-50">Sypora <span className="text-accent-blue">AI</span></span>
           </Link>
 
           <h1 className="font-display text-3xl font-semibold text-navy-900 dark:text-cream-50 mb-2">Create your account</h1>

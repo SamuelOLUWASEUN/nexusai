@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Shield, Lock, Server, Users, Check } from "lucide-react";
 
-export const metadata: Metadata = { title: "Nexus AI for Enterprise" };
+export const metadata: Metadata = { title: "Sypora AI for Enterprise" };
 
 const enterpriseFeatures = [
   { icon: Shield, title: "SOC 2 Type II certified",  desc: "Independently audited. Full compliance documentation and pentest reports available under NDA." },
@@ -13,7 +13,7 @@ const enterpriseFeatures = [
 
 const objections = [
   { q: "What about our existing security review process?",   a: "We'll complete your vendor questionnaire, provide SOC 2 reports, and schedule a technical call with our security team — whatever your process requires." },
-  { q: "Can we control what data Nexus accesses?",           a: "Completely. You configure which tools connect, which channels and folders are indexed, and which employees have access to what. Granular controls at every level." },
+  { q: "Can we control what data Sypora accesses?",           a: "Completely. You configure which tools connect, which channels and folders are indexed, and which employees have access to what. Granular controls at every level." },
   { q: "What does implementation look like?",                a: "Your dedicated Customer Success Manager handles rollout. Most enterprises are fully deployed in under 2 weeks with change management support included." },
   { q: "How does pricing work for large teams?",             a: "Enterprise pricing is based on your team size and use case. We offer multi-year agreements, custom SLAs and volume discounts. Contact us for a custom quote." },
 ];
@@ -30,7 +30,7 @@ export default function EnterprisePage() {
           <span className="italic text-accent-blue">Control at every level.</span>
         </h1>
         <p className="section-sub mx-auto text-center mb-10">
-          Nexus Enterprise gives large organizations the AI capabilities they need with the compliance, security and governance controls they require. Private cloud, SSO, SLAs and a dedicated success team included.
+          Sypora Enterprise gives large organizations the AI capabilities they need with the compliance, security and governance controls they require. Private cloud, SSO, SLAs and a dedicated success team included.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link href="/contact?type=enterprise" className="btn-primary text-base px-8 py-3.5">
@@ -116,7 +116,7 @@ export default function EnterprisePage() {
       <div className="max-w-2xl mx-auto px-4 text-center">
         <div className="card p-10">
           <h2 className="font-display text-3xl font-semibold text-navy-900 dark:text-cream-100 mb-3">
-            Ready to evaluate Nexus?
+            Ready to evaluate Sypora?
           </h2>
           <p className="font-body text-navy-500 dark:text-cream-400 mb-6 leading-relaxed">
             Our enterprise team will walk you through a live demo tailored to your use case, complete your security questionnaire and build a custom proposal.

@@ -74,7 +74,7 @@ export default function IntegrationsPage() {
         <div className="section-tag mx-auto">Integrations</div>
         <h1 className="section-title">Connects to everything<br />your team already uses.</h1>
         <p className="section-sub mx-auto text-center mb-8">
-          One-click OAuth connections. No API keys, no engineering work. Nexus indexes your tools continuously so your answers are always up to date.
+          One-click OAuth connections. No API keys, no engineering work. Sypora indexes your tools continuously so your answers are always up to date.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link href="/signup" className="btn-primary">
@@ -92,7 +92,7 @@ export default function IntegrationsPage() {
           {[
             { icon: "⚡", title: "One-click OAuth",     desc: "Connect any tool in 60 seconds via secure OAuth. No API keys required." },
             { icon: "🔄", title: "Real-time indexing",  desc: "Data indexed continuously. Ask about something posted 5 minutes ago." },
-            { icon: "🔒", title: "Permission-aware",    desc: "Nexus enforces your existing tool permissions on every single query." },
+            { icon: "🔒", title: "Permission-aware",    desc: "Sypora enforces your existing tool permissions on every single query." },
           ].map((item, i) => (
             <div key={i} className="card p-6">
               <div className="text-3xl mb-3">{item.icon}</div>

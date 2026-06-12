@@ -1,8 +1,8 @@
-// Nexus AI Service Worker
+// Sypora AI Service Worker
 // Handles caching, offline support and push notifications
 
-const CACHE_NAME = "nexusai-v1";
-const STATIC_CACHE = "nexusai-static-v1";
+const CACHE_NAME = "sypora-ai-v1";
+const STATIC_CACHE = "sypora-ai-static-v1";
 
 // Assets to cache immediately on install
 const PRECACHE_ASSETS = [
@@ -86,20 +86,20 @@ self.addEventListener("push", (event) => {
 
   const data = event.data.json();
   const options = {
-    body:    data.body    || "You have a new notification from Nexus AI",
+    body:    data.body    || "You have a new notification from Sypora AI",
     icon:    "/icons/icon-192.png",
     badge:   "/icons/icon-72.png",
-    tag:     data.tag     || "nexusai-notification",
+    tag:     data.tag     || "sypora-ai-notification",
     renotify: true,
     data:    { url: data.url || "/dashboard" },
     actions: [
-      { action: "open",    title: "Open Nexus" },
+      { action: "open",    title: "Open Sypora" },
       { action: "dismiss", title: "Dismiss"    },
     ],
   };
 
   event.waitUntil(
-    self.registration.showNotification(data.title || "Nexus AI", options)
+    self.registration.showNotification(data.title || "Sypora AI", options)
   );
 });
 

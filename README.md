@@ -1,4 +1,4 @@
-# Nexus AI — Full Stack AI Workspace Hub
+# Sypora AI — Full Stack AI Workspace Hub
 
 A production-ready, full-stack AI workspace platform built with Next.js 14, Supabase, TypeScript, Tailwind CSS and the Anthropic Claude API.
 
@@ -53,7 +53,7 @@ A production-ready, full-stack AI workspace platform built with Next.js 14, Supa
 ### 1. Clone and install
 
 ```bash
-cd nexusai
+cd sypora-ai
 npm install
 ```
 
@@ -101,8 +101,8 @@ Open [http://localhost:3000](http://localhost:3000)
 ```bash
 git init
 git add .
-git commit -m "Initial commit - Nexus AI"
-git remote add origin https://github.com/YOUR-USERNAME/nexusai.git
+git commit -m "Initial commit - Sypora AI"
+git remote add origin https://github.com/YOUR-USERNAME/sypora-ai.git
 git push -u origin main
 ```
 
@@ -119,7 +119,7 @@ git push -u origin main
 ## Customization Guide
 
 ### Change brand name
-Find and replace `Nexus AI` across:
+Find and replace `Sypora AI` across:
 - `app/layout.tsx` (metadata)
 - `components/layout/Navbar.tsx`
 - `components/layout/Footer.tsx`
@@ -146,7 +146,7 @@ Vercel redeploys automatically within 2 minutes.
 ## Project Structure
 
 ```
-nexusai/
+sypora-ai/
 ├── app/
 │   ├── page.tsx              # Homepage
 │   ├── layout.tsx            # Root layout

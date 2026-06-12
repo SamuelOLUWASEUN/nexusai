@@ -41,7 +41,7 @@ export default function LoginPage() {
               </svg>
             </div>
             <span className="font-display font-semibold text-lg text-navy-900 dark:text-cream-50">
-              Nexus <span className="text-accent-blue">AI</span>
+              Sypora <span className="text-accent-blue">AI</span>
             </span>
           </Link>
 
@@ -130,7 +130,7 @@ export default function LoginPage() {
         <div className="relative z-10 max-w-sm text-center">
           <div className="text-5xl mb-6">🧠</div>
           <h2 className="font-display text-3xl font-semibold text-white mb-4 leading-tight">
-            "Nexus saved our team 16 hours of senior leadership time every week."
+            "Sypora saved our team 16 hours of senior leadership time every week."
           </h2>
           <p className="font-body text-cream-400 text-sm">Marcus Reid, VP of Operations at Archtype</p>
           <div className="flex justify-center gap-1 mt-4">

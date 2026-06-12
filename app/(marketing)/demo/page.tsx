@@ -11,9 +11,9 @@ export default function DemoPage() {
         {/* Header */}
         <div className="text-center mb-14">
           <div className="section-tag mx-auto">Live Demo</div>
-          <h1 className="section-title">See Nexus AI in action.</h1>
+          <h1 className="section-title">See Sypora AI in action.</h1>
           <p className="section-sub mx-auto text-center mb-8">
-            Watch how teams use Nexus to find answers, summarize meetings and draft documents — in under 3 minutes.
+            Watch how teams use Sypora to find answers, summarize meetings and draft documents — in under 3 minutes.
           </p>
         </div>
 
@@ -43,9 +43,9 @@ export default function DemoPage() {
         {/* Demo highlights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
           {[
-            { time: "0:00", title: "Connect in 60 seconds",    desc: "Watch how Nexus connects to Slack, Notion and GitHub with one-click OAuth — no engineering required." },
+            { time: "0:00", title: "Connect in 60 seconds",    desc: "Watch how Sypora connects to Slack, Notion and GitHub with one-click OAuth — no engineering required." },
             { time: "1:20", title: "Ask your first question",  desc: "See how natural language search works across all connected tools simultaneously with cited sources." },
-            { time: "2:30", title: "Auto-generate a summary",  desc: "Watch Nexus draft a full sprint update from Linear tickets and Slack messages in under 30 seconds." },
+            { time: "2:30", title: "Auto-generate a summary",  desc: "Watch Sypora draft a full sprint update from Linear tickets and Slack messages in under 30 seconds." },
           ].map((item, i) => (
             <div key={i} className="card p-5 cursor-pointer hover:border-accent-blue/30 transition-all">
               <span className="font-mono text-xs text-accent-blue bg-accent-blue/10 px-2 py-0.5 rounded border border-accent-blue/20 mb-3 inline-block">{item.time}</span>
@@ -61,7 +61,7 @@ export default function DemoPage() {
             Ready to try it yourself?
           </h2>
           <p className="font-body text-navy-500 dark:text-cream-400 mb-8 max-w-lg mx-auto leading-relaxed">
-            The fastest way to understand Nexus is to use it. Start for free in 4 minutes — no demo call required, no credit card needed.
+            The fastest way to understand Sypora is to use it. Start for free in 4 minutes — no demo call required, no credit card needed.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/signup" className="btn-primary text-base px-8 py-3.5">

@@ -10,7 +10,7 @@ export default function PrivacyPage() {
           <p className="font-mono text-xs text-navy-400 dark:text-cream-500 mb-2">Last updated: June 1, 2026</p>
           <h1 className="font-display text-4xl font-semibold text-navy-900 dark:text-cream-50 mb-4">Privacy Policy</h1>
           <p className="font-body text-navy-500 dark:text-cream-400 leading-relaxed">
-            Nexus AI, Inc. ("Nexus," "we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose and safeguard your information when you use our service.
+            Sypora AI, Inc. ("Sypora," "we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose and safeguard your information when you use our service.
           </p>
         </div>
 
@@ -36,7 +36,7 @@ We use indexed data from your connected tools solely to power the AI search and 
 
 We may share data with trusted service providers who assist in operating our platform (such as cloud hosting providers), but only under strict confidentiality agreements and only as necessary to provide the service.
 
-We may disclose data if required by law or to protect the rights, property or safety of Nexus, our customers or others.`,
+We may disclose data if required by law or to protect the rights, property or safety of Sypora, our customers or others.`,
             },
             {
               title: "4. Data Retention",
@@ -54,7 +54,7 @@ Despite these measures, no system is completely secure. We encourage you to use 
               title: "6. Your Rights",
               content: `Depending on your location, you may have rights to access, correct, delete or export your personal data. You may also have the right to restrict or object to certain processing.
 
-To exercise these rights, contact us at privacy@nexusai.com. We will respond within 30 days. If you are in the EU or UK, you have additional rights under GDPR and UK GDPR.`,
+To exercise these rights, contact us at privacy@sypora-ai.com. We will respond within 30 days. If you are in the EU or UK, you have additional rights under GDPR and UK GDPR.`,
             },
             {
               title: "7. Cookies",
@@ -66,11 +66,11 @@ We use strictly necessary cookies (required for the service to function), functi
               title: "8. Contact Us",
               content: `If you have questions about this Privacy Policy or our data practices, please contact us at:
 
-Nexus AI, Inc.
-privacy@nexusai.com
+Sypora AI, Inc.
+privacy@sypora-ai.com
 San Francisco, CA, USA
 
-For EU/UK data subjects, our Data Protection Officer can be reached at dpo@nexusai.com.`,
+For EU/UK data subjects, our Data Protection Officer can be reached at dpo@sypora-ai.com.`,
             },
           ].map((section, i) => (
             <div key={i}>

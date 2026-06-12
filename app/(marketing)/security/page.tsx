@@ -71,7 +71,7 @@ export default function SecurityPage() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link href="/contact?type=enterprise" className="btn-primary">Request security review <ArrowRight size={16} /></Link>
-          <a href="/nexusai-security-whitepaper.pdf" className="btn-secondary">Download security whitepaper</a>
+          <a href="/sypora-ai-security-whitepaper.pdf" className="btn-secondary">Download security whitepaper</a>
         </div>
       </div>
 
@@ -152,7 +152,7 @@ export default function SecurityPage() {
           <p className="font-body text-navy-500 dark:text-cream-400 mb-6">Our security team is happy to answer questions, complete your vendor questionnaire, or set up a technical deep dive.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/contact?type=enterprise" className="btn-primary">Talk to our security team <ArrowRight size={16} /></Link>
-            <a href="mailto:security@nexusai.com" className="btn-secondary">security@nexusai.com</a>
+            <a href="mailto:security@sypora-ai.com" className="btn-secondary">security@sypora-ai.com</a>
           </div>
         </div>
       </div>
