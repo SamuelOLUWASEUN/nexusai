@@ -70,32 +70,49 @@ export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen]           = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) { router.push("/login"); return; }
-      setUser(data.user);
-      setProfileForm({
-        full_name: data.user.user_metadata?.full_name || "",
-        company:   data.user.user_metadata?.company   || "",
-        role:      data.user.user_metadata?.role      || "",
-      });
-
-      // Handle OAuth redirects
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("connected") === "notion") {
-        setIntegrations(prev => prev.map(i =>
-          i.name === "Notion" ? { ...i, connected: true } : i
-        ));
-        toast.success("Notion connected! Indexing your pages...");
-        fetch("/api/notion/index", { method: "POST" });
-        window.history.replaceState({}, "", "/dashboard");
-      }
-      if (params.get("error")) {
-        toast.error("Failed to connect. Please try again.");
-        window.history.replaceState({}, "", "/dashboard");
-      }
+useEffect(() => {
+  supabase.auth.getUser().then(async ({ data }) => {
+    if (!data.user) { router.push("/login"); return; }
+    setUser(data.user);
+    setProfileForm({
+      full_name: data.user.user_metadata?.full_name || "",
+      company:   data.user.user_metadata?.company   || "",
+      role:      data.user.user_metadata?.role      || "",
     });
-  }, []);
+
+    // Load connected integrations from Supabase
+    const { data: connectedIntegrations } = await supabase
+      .from("user_integrations")
+      .select("tool_slug")
+      .eq("user_id", data.user.id)
+      .eq("connected", true);
+
+    if (connectedIntegrations && connectedIntegrations.length > 0) {
+      const connectedSlugs = connectedIntegrations.map(i => i.tool_slug);
+      setIntegrations(prev => prev.map(i => ({
+        ...i,
+        connected: connectedSlugs.includes(i.name.toLowerCase().replace(" ", "_")) ||
+                   connectedSlugs.includes(i.name.toLowerCase()) ||
+                   connectedSlugs.includes(i.name.toLowerCase().replace(" ", "-"))
+      })));
+    }
+
+    // Handle OAuth redirects
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("connected") === "notion") {
+      setIntegrations(prev => prev.map(i =>
+        i.name === "Notion" ? { ...i, connected: true } : i
+      ));
+      toast.success("Notion connected! Indexing your pages...");
+      fetch("/api/notion/index", { method: "POST" });
+      window.history.replaceState({}, "", "/dashboard");
+    }
+    if (params.get("error")) {
+      toast.error("Failed to connect. Please try again.");
+      window.history.replaceState({}, "", "/dashboard");
+    }
+  });
+}, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -157,12 +174,18 @@ async function toggleIntegration(name: string) {
   const integration = integrations.find(i => i.name === name);
 
   if (name === "Notion" && !integration?.connected) {
-    if (!user?.id) {
-      toast.error("Please sign in first");
-      return;
-    }
+    if (!user?.id) { toast.error("Please sign in first"); return; }
     window.location.href = "/api/notion/connect?user_id=" + user.id;
     return;
+  }
+
+  // Update Supabase
+  const toolSlug = name.toLowerCase().replace(" ", "_");
+  if (integration?.connected) {
+    await supabase.from("user_integrations")
+      .update({ connected: false })
+      .eq("user_id", user.id)
+      .eq("tool_slug", toolSlug);
   }
 
   setIntegrations(prev => prev.map(i =>
